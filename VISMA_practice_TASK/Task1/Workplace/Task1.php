@@ -116,8 +116,8 @@ for($i =0; $i<$word_lng;$i++)
 }
 
 
-echo "Your changed word is:\n";
-echo "$formated_word\n";
+echo "Your changed word is:\n\n";
+echo "$formated_word\n\n";
 
     // $time_end = microtime(true);
 
