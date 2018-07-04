@@ -2,7 +2,7 @@
 date_default_timezone_set('Europe/Vilnius');
 // locale_set_default('de-DE');
 echo locale_get_default();
-$file = new SplFileObject("C:\Users\Gytis.Apinys\Desktop\VISMA_practice_TASK\Task1\Task1_algorith.txt");
+$file = new SplFileObject("https://gist.githubusercontent.com/cosmologicon/1e7291714094d71a0e25678316141586/raw/006f7e9093dc7ad72b12ff9f1da649822e56d39d/tex-hyphenation-patterns.txt");
 while (!$file->eof()) {
     $patterns[] = $file->fgets();
 }
