@@ -1,4 +1,6 @@
 <?php 
+namespace task\two;
+use SplFileObject;
 
 class File
 {

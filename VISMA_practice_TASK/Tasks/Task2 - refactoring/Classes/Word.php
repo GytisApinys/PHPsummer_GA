@@ -1,4 +1,5 @@
 <?php
+namespace task\two;
 
 class Word
 {
@@ -6,17 +7,17 @@ class Word
     public function __construct($word){
         $this->given_word = $word;
     }
-    public function wordModify($pattern)
+    public function modifyWord($pattern)
     {
         $matchingPatterns = $this->findMatch($pattern);
-        $wordSpacing = $this->syllableSpacing($matchingPatterns);
-        $modifiedWord = $this->combine($wordSpacing);
+        $wordSpacing = $this->spaceSyllable($matchingPatterns);
+        $modifiedWord = $this->combineStrings($wordSpacing);
         return $modifiedWord;
     }
     private function findMatch($patterns)
     {
         foreach($patterns as $syllable){
-            $Clean_syllable = $this->remove_numbers_and_dot($syllable);
+            $Clean_syllable = $this->removeSpaceNum($syllable);
             $patternlen = strlen(trim($syllable))-1;
             $lastPos = 0;
             $position = 0;
@@ -48,7 +49,7 @@ class Word
         }
         return $found_patterns;
     }
-    private function syllableSpacing($matchingPatterns)
+    private function spaceSyllable($matchingPatterns)
     {
         $word_spaces = array_fill(0,strlen($this->given_word),0);
         if(!empty($matchingPatterns))
@@ -95,7 +96,7 @@ class Word
         }
         return $word_spaces;
     }
-    private function combine($spacing)
+    private function combineStrings($spacing)
     {
         $formated_word = '';
         $word_lng = strlen($this->given_word);
@@ -122,7 +123,7 @@ class Word
         }
         return $formated_word;
     }
-    private function remove_numbers_and_dot($string) 
+    private function removeSpaceNum($string) 
     {
         $num = array(0,1,2,3,4,5,6,7,8,9,'.',"\n","\r");
         return str_replace($num, null, $string);
