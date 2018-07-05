@@ -3,16 +3,35 @@ namespace task\two;
 
 include 'Classes/File.php';
 include 'Classes/Word.php';
+include 'Classes/WriteConsole.php';
+include 'Classes/InputFile.php';
+include 'Classes/InputHand.php';
 
-    $filename = "https://gist.githubusercontent.com/cosmologicon/1e7291714094d71a0e25678316141586/raw/006f7e9093dc7ad72b12ff9f1da649822e56d39d/tex-hyphenation-patterns.txt";
-    $patterns = File::read_from_file($filename);
+const FILENAME = "https://gist.githubusercontent.com/cosmologicon/1e7291714094d71a0e25678316141586/raw/006f7e9093dc7ad72b12ff9f1da649822e56d39d/tex-hyphenation-patterns.txt";
 
 
-    $objFile = new File();
-    $givenWord = $objFile->start_display();
-    $objWord = new Word($givenWord);
-    $word_syllabled = $objWord->modifyWord($patterns);
-    $objFile->end_display($word_syllabled);
+// echo __DIR__;
+// die();
+$patterns = File::readData(FILENAME);
+$objFile = new File();
+$givenWord = $objFile->startingMessage();
+
+ 
+    if(is_array($givenWord))
+    {
+        foreach($givenWord as $word)
+        {
+            $objWord = new Word($word);
+            $word_syllabled = $objWord->modifyWord($patterns);
+            $objFile->resultDisplay($word_syllabled);
+        }
+    }else 
+        {
+             $objWord = new Word($givenWord);
+            $word_syllabled = $objWord->modifyWord($patterns);
+            $objFile->resultDisplay($word_syllabled);
+        }
+    
     
 
 
