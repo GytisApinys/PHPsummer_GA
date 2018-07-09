@@ -1,18 +1,27 @@
 <?php 
-namespace task\two;
+namespace SyllableAplication\Classes;
 
 use SplFileObject;
 
 class File
 {
-    public $welcome_msg = "\nEnter word you wanna split by syllables:";
-
         public function startingMessage()
-            {
-                echo $this->welcome_msg;
-                $task = $this->getInput();
-                return $task;
-            }
+        {
+            $this->welcomeMessage();
+            $task = $this->getInput();
+            return $task;
+        }
+        public function welcomeMessage()
+        {
+            echo "\n|---------Word syllabizer---------|\n";
+            echo "|                                 |\n";
+            echo "| Input word by: file or by hand? |\n";
+            echo "|                                 |\n";
+            echo "|[1] - File                       |\n";
+            echo "|[2] - Input                      |\n";
+            echo "|---------------------------------|\n";
+            echo "Enter choise: ";
+        }
         public static function readData($filename)
         {
             $file = new SplFileObject($filename);
@@ -28,12 +37,9 @@ class File
         }
         public function getInput()
         {
-            echo "Input word by: file or by hand?\n";
-            echo "1 - file\n";
-            echo "2 - input\n";
+
             $action = trim(fgets(STDIN));
-            switch($action)
-            {
+            switch ($action) {
                 case 1:
                     $InputFile = new InputFile;
                     $input = $InputFile->inputConsole();

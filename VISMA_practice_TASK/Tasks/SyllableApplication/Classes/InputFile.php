@@ -1,5 +1,5 @@
 <?php
-namespace task\two;
+namespace SyllableAplication\Classes;
 
 use SplFileObject;
 
@@ -11,17 +11,15 @@ class InputFile implements WriteConsole
             $filename = trim(fgets(STDIN));
             $filename =__DIR__."\\..\\Data\\" .$filename . ".txt";
 
-             echo "*****".$filename."******\n";
-             echo "*****".__DIR__."******\n";
-            if (file_exists($filename))
-                {
-                    $file = new SplFileObject($filename);
-                    while (!$file->eof()) {
-                    $wordlist[] = trim($file->fgets());
-                }
+            //  echo "*****".$filename."******\n";
+            //  echo "*****".__DIR__."******\n";
+            if (file_exists($filename)) {
+                $file = new SplFileObject($filename);
+                while (!$file->eof()) {
+                      $wordlist[] = trim($file->fgets());
+                    }
                 return $wordlist;
-            }else 
-            {
+            } else {
                 echo "File does not exist.";
                 die;//  error expection handler
             }

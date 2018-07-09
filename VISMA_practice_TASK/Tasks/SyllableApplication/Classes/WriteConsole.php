@@ -1,5 +1,5 @@
 <?php
-namespace task\two;
+namespace SyllableAplication\Classes;
 
 interface WriteConsole
     {
