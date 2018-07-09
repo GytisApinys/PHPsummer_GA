@@ -1,7 +1,7 @@
 <?php
 namespace SyllableAplication;
 
-require_once 'Psr4Autoloader.php';
+require_once 'Loader/Psr4Autoloader.php';
 
 use AutoLoader\Psr4Autoloader;
 use SyllableAplication\Classes\File;
