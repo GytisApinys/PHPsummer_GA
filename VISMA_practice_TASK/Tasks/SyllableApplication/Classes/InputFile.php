@@ -14,11 +14,10 @@ class InputFile implements WriteConsole
             //  echo "*****".$filename."******\n";
             //  echo "*****".__DIR__."******\n";
             if (file_exists($filename)) {
-                $file = new SplFileObject($filename);
-                while (!$file->eof()) {
-                      $wordlist[] = trim($file->fgets());
-                    }
-                return $wordlist;
+                // $file = new SplFileObject($filename);
+                $words = file_get_contents($filename);
+                $wordlistDivided = preg_split('/\b/',$words);
+                return $wordlistDivided;
             } else {
                 echo "File does not exist.";
                 die;//  error expection handler
@@ -26,6 +25,12 @@ class InputFile implements WriteConsole
         }
         public function outputConsole($message)
         {
-            // put display responsability here
+            $file = 'result_' . date('His'). '.txt';
+            $fileName = "C:\Users\Gytis.Apinys\Documents\GitHub\PHPsummer_GA\VISMA_practice_TASK\Tasks\SyllableApplication\Results\\".$file;
+            if(file_put_contents($fileName,$message)){
+                echo "Results were succesfully placed in file: $file\n";
+            } else {
+                // error handler
+            }
         }
     }

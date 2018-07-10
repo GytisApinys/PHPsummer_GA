@@ -7,11 +7,13 @@ class InputHand implements WriteConsole
         {
             echo "Enter word to work with:\n";
             $word = trim(fgets(STDIN));
-            return $word;            
+            $wordlist = preg_split('/\b/',$word);
+            return $wordlist;            
         }
             
         public function outputConsole($message)
         {
-            // put display responsability here
+            echo "\nYour changed input:\n";
+            echo "$message\n";
         }
     }

@@ -18,7 +18,7 @@ class Word
     private function findMatch($patterns)
     {
         foreach ($patterns as $syllable) {
-            $Clean_syllable = preg_replace("/[\d\s[.]+/", "", $syllable);
+            $Clean_syllable = preg_replace("/[\d\s.]+/", "", $syllable);
             $patternlen = strlen(trim($syllable)) - 1;
             $lastPos = 0;
             $position = 0;
@@ -32,8 +32,8 @@ class Word
                 if ($position !== false && substr_compare($this->givenWord, $Clean_syllable, -strlen($Clean_syllable)) === 0) {
                     $found_patterns[trim($syllable)][] = $position;
                 }
-            } elseif (preg_match("/".$Clean_syllable."/i", $this->givenWord) != null) {
-                preg_match_all("/".$Clean_syllable."/i", $this->givenWord, $possitionArray, PREG_OFFSET_CAPTURE);
+            } elseif (preg_match("/$Clean_syllable/i", $this->givenWord) != null) {
+                preg_match_all("/$Clean_syllable/i", $this->givenWord, $possitionArray, PREG_OFFSET_CAPTURE);
                 for ($i=0; $i < count($possitionArray[0]) ;$i++) {
                     $found_patterns[trim($syllable)][] = $possitionArray[0][$i][1];
                 }
@@ -97,7 +97,7 @@ class Word
             {
                 $temp2 = $spacing[$i];
                 $temp2 = (float)$temp2;
-                if($temp2 % 2 !== 0) {$temp2 = '-';} else {$temp2 = ' ';};
+                if($temp2 % 2 !== 0) {$temp2 = '-';} else {$temp2 = '';};
                 $formated_word = $formated_word . $temp1 . $temp2;
             }else {
                 $formated_word = $formated_word . $temp1;

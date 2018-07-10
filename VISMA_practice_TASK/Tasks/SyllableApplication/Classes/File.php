@@ -9,6 +9,8 @@ class File
         {
             $this->welcomeMessage();
             $task = $this->getInput();
+            // var_dump($task);
+            // die;
             return $task;
         }
         public function welcomeMessage()
@@ -32,8 +34,27 @@ class File
         }
         public function resultDisplay($formated_word)
         {
-           // echo "Your changed word is:\n\n";
-            echo "$formated_word\n";
+            echo "\nHow would you want to get result?\n";
+            echo "[1] - File\n";
+            echo "[2] - Console\n";
+            $action = trim(fgets(STDIN));
+            $End = FALSE;
+            while ($End == false) {
+                switch ($action) {
+                case 1:
+                    $InputFile = new InputFile;
+                    $input = $InputFile->outputConsole($formated_word);
+                    $End = true;
+                    break;
+                case 2:
+                    $InputHand = new InputHand;
+                    $input = $InputHand->outputConsole($formated_word);
+                    $End = true;
+                    break;
+                default:
+                    echo "Wrong input. Try again.";
+                }
+            }
         }
         public function getInput()
         {

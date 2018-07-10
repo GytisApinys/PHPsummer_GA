@@ -27,15 +27,19 @@ FileLogger::info('Program starting.');
 $patterns = File::readData(FILENAME);
 $objFile = new File();
 $givenWord = $objFile->startingMessage();
-
+$FinalResult = '';
 if (is_array($givenWord)) {
     foreach ($givenWord as $word) {
-        $objWord = new Word($word);
-        $word_syllabled = $objWord->modifyWord($patterns);
-        $objFile->resultDisplay($word_syllabled);
+        if (preg_match("/[\w]/",$word) != NULL){
+            $objWord = new Word($word);
+            $word_syllabled = $objWord->modifyWord($patterns);
+            $word = $word_syllabled;
+        }
+        $FinalResult .= $word;
     }
 } else {
-    $objWord = new Word($givenWord);
-    $word_syllabled = $objWord->modifyWord($patterns);
-    $objFile->resultDisplay($word_syllabled);
+    // error handler
 }
+
+$objFile->resultDisplay($FinalResult);
+
