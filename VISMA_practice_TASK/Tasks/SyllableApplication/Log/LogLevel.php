@@ -1,6 +1,6 @@
 <?php
 
-namespace SyllableApplication\Log;
+namespace Log;
 
 /**
  * Describes log levels

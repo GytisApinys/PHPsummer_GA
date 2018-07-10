@@ -17,35 +17,32 @@ class Word
     }
     private function findMatch($patterns)
     {
-        foreach($patterns as $syllable) {
-            $Clean_syllable = $this->removeSpaceNum($syllable);
+        foreach ($patterns as $syllable) {
+            $Clean_syllable = preg_replace("/[\d\s[.]+/", "", $syllable);
             $patternlen = strlen(trim($syllable)) - 1;
             $lastPos = 0;
             $position = 0;
-            if ($syllable[0] == '.' ) {
-                $position = stripos ($this->givenWord, $Clean_syllable);
+            if (preg_match('/^[.]/', $syllable) != null) {
+                $position = stripos($this->givenWord, $Clean_syllable);
                 if ($position !== false && substr($this->givenWord, 0, strlen($Clean_syllable)) === $Clean_syllable) {
                     $found_patterns[trim($syllable)][] = $position;
-                }   
-            } elseif ($syllable[$patternlen] == '.') 
-            {
-                $position = stripos ($this->givenWord, $Clean_syllable);
-        
+                }
+            } elseif (preg_match('/[.]$/', $syllable) != null) {
+                $position = stripos($this->givenWord, $Clean_syllable);
                 if ($position !== false && substr_compare($this->givenWord, $Clean_syllable, -strlen($Clean_syllable)) === 0) {
                     $found_patterns[trim($syllable)][] = $position;
-                }   
-            } elseif (stripos($this->givenWord, $Clean_syllable) !== false) {
-                    while (($lastPos = stripos ($this->givenWord, $Clean_syllable, $lastPos)) !== false) {
-                        $found_patterns[trim($syllable)][] = $lastPos;
-                        $lastPos = $lastPos + strlen($Clean_syllable);
-                    }
-                }   
+                }
+            } elseif (preg_match("/".$Clean_syllable."/i", $this->givenWord) != null) {
+                preg_match_all("/".$Clean_syllable."/i", $this->givenWord, $possitionArray, PREG_OFFSET_CAPTURE);
+                for ($i=0; $i < count($possitionArray[0]) ;$i++) {
+                    $found_patterns[trim($syllable)][] = $possitionArray[0][$i][1];
+                }
+            }
         }
-        if (empty($found_patterns))
-        {
+       if (empty($found_patterns)) {
             $found_patterns = NULL;
         }
-        return $found_patterns;
+        return $found_patterns; 
     }
     private function spaceSyllable($matchingPatterns)
     {
@@ -112,9 +109,9 @@ class Word
         }
         return $formated_word;
     }
-    private function removeSpaceNum($string) 
-    {
-        $num = array(0,1,2,3,4,5,6,7,8,9,'.',"\n","\r");
-        return str_replace($num, null, $string);
-    }
+    // private function removeSpaceNum($string) 
+    // {
+    //     $num = array(0,1,2,3,4,5,6,7,8,9,'.',"\n","\r");
+    //     return str_replace($num, null, $string);
+    // }
 }

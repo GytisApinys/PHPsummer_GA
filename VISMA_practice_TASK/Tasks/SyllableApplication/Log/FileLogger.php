@@ -1,51 +1,55 @@
 <?php 
-namespace Syllable\Log;
+namespace Log;
 
 
 use SplFileObject;
 
 class FileLogger implements LoggerInterface
 {
-    private $file;
+    // private $file;
 
-    public function logOpen()
+    // public static function logOpen()
+    // {
+    //     $file = new SplFileObject;
+    // }
+    public static function emergency($message, array $context = array())
     {
-        $this->file = new SplFileObject;
+        FileLogger::log(LogLevel::EMERGENCY, $message, $context);
     }
-    public function emergency($message, array $context = array())
+    public static function alert($message, array $context = array())
     {
-        $this->log(LogLevel::EMERGENCY, $message, $context);
+        FileLogger::log(LogLevel::ALERT, $message, $context);
     }
-    public function alert($message, array $context = array())
+    public static function critical($message, array $context = array())
     {
-        $this->log(LogLevel::ALERT, $message, $context);
+        FileLogger::log(LogLevel::CRITICAL, $message, $context);
     }
-    public function critical($message, array $context = array())
+    public static function error($message, array $context = array())
     {
-        $this->log(LogLevel::CRITICAL, $message, $context);
+        FileLogger::log(LogLevel::ERROR, $message, $context);
     }
-    public function error($message, array $context = array())
+    public static function warning($message, array $context = array())
     {
-        $this->log(LogLevel::ERROR, $message, $context);
+        FileLogger::log(LogLevel::WARNING, $message, $context);
     }
-    public function warning($message, array $context = array())
+    public static function notice($message, array $context = array())
     {
-        $this->log(LogLevel::WARNING, $message, $context);
+        FileLogger::log(LogLevel::NOTICE, $message, $context);
     }
-    public function notice($message, array $context = array())
+    public static function info($message, array $context = array())
     {
-        $this->log(LogLevel::NOTICE, $message, $context);
+        FileLogger::log(LogLevel::INFO, $message, $context);
     }
-    public function info($message, array $context = array())
+    public static function debug($message, array $context = array())
     {
-        $this->log(LogLevel::INFO, $message, $context);
+        FileLogger::log(LogLevel::DEBUG, $message, $context);
     }
-    public function debug($message, array $context = array())
+    public static function log($level, $message, array $context = array())
     {
-        $this->log(LogLevel::DEBUG, $message, $context);
-    }
-    public function log($level, $message, array $context = array())
-    {
-        
+        $LogFile = __DIR__.'\\'.'SystemLog.txt';
+        $current = file_get_contents($LogFile);
+        $current .= '[' . date('Y M d') . ']' . $level . ": $message\n";
+        file_put_contents($LogFile, $current);
     }
 }
+
