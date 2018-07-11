@@ -5,24 +5,31 @@ use SplFileObject;
 
 class File
 {
-        public function startingMessage()
+        public function execute($patterns)
         {
             $this->welcomeMessage();
+            $task = $this->getSourceOption();
             $task = $this->getInput();
+            $finalInput = $this->modifyInput($task, $patterns);
             // var_dump($task);
             // die;
-            return $task;
+            return $finalInput;
+        }
+        public function getSourceOption()
+        {
+            
         }
         public function welcomeMessage()
         {
-            echo "\n|---------Word syllabizer---------|\n";
+            echo "\n|---------Word Syllabizer---------|\n";
             echo "|                                 |\n";
-            echo "| Input word by: file or by hand? |\n";
+            echo "|    Would you like to work       |\n";
+            echo "|    with Database or file?       |\n";
             echo "|                                 |\n";
-            echo "|[1] - File                       |\n";
-            echo "|[2] - Input                      |\n";
+            echo "|   [1] - Database                |\n";
+            echo "|   [2] - File                    |\n";
             echo "|---------------------------------|\n";
-            echo "Enter choise: ";
+            echo "Enter choice: ";
         }
         public static function readData($filename)
         {
@@ -77,6 +84,30 @@ class File
              }
             $word = trim(fgets(STDIN));
             return $word;
+        }
+        public function modifyInput($wordList, $patterns)
+        {
+            $objTimer = new Timer();
+            $objTimer->start();
+            $FinalResult = '';
+            if (is_array($wordList)) {
+                foreach ($wordList as $word) {
+                    if (preg_match("/[\w]/",$word) != NULL) {
+                        $objWord = new Word($word);
+                        $word_syllabled = $objWord->modifyWord($patterns);
+                        $word = $word_syllabled;
+                    }
+                    $FinalResult .= $word;
+                }
+            } else {
+                // error handler
+            }
+            $objTimer->stop();
+            $timeDuration = $objTimer->duration();
+             return [
+                'time' => $timeDuration,
+                'result' => $FinalResult,
+            ];
         }
 }
 

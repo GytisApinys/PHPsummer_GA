@@ -1,7 +1,6 @@
 <?php 
 namespace Log;
 
-
 use SplFileObject;
 
 class FileLogger implements LoggerInterface
@@ -48,7 +47,7 @@ class FileLogger implements LoggerInterface
     {
         $LogFile = __DIR__.'\\'.'SystemLog.txt';
         $current = file_get_contents($LogFile);
-        $current .= '[' . date('Y M d') . ']' . $level . ": $message\n";
+        $current .= "\n[" . date('Y M d') . "]" . $level . ": $message\n";
         file_put_contents($LogFile, $current);
     }
 }
