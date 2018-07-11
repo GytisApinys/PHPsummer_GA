@@ -39,12 +39,37 @@ class Database
     {
         $this->database->beginTransaction();
 
+        $query = "INSERT INTO ". $tableName ."(";
+        $atributes = implode(", ",$atributeName);
+        $query .= $atributes.") VALUES(:";
+        $valueString = implode(", :", $atributeName);
+        $query .= $valueString . ")";
+        
+        $command = $this->database->prepare($query);
+        for ($i = 0; $i < count($atributeName); $i++)
+        {
+            $command->bindParam(":".$atributeName[$i], $values[$i]);
+        }
+        $command->execute();
         $this->database->commit();
 
     }
-    public function search()
+    public function search($tableName ) // not working yet
     {
         $this->database->beginTransaction();
+        // SELECT * FROM `try` WHERE www = "test" and id = "1"
+        $query = "SELECT * FROM ". $tableName ." WHERE ";
+        $atributes = implode(", ",$atributeName);
+        $query .= $atributes.") VALUES(:";
+        $valueString = implode(", :", $atributeName);
+        $query .= $valueString . ")";
+        
+        $command = $this->database->prepare($query);
+        for ($i = 0; $i < count($atributeName); $i++)
+        {
+            $command->bindParam(":".$atributeName[$i], $values[$i]);
+        }
+        $command->execute();
 
         $this->database->commit();
     }
