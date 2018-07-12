@@ -16,6 +16,10 @@ class Database
         }
         $this->database->exec('USE syllable_application');
     }
+    //////
+    # $db = new Database();
+    # $db->add("try",$one = array( "www"), $two = array( "test"));
+    /////
     public function add(string $tableName, array $atributeName, array $values)
     {
         $this->database->beginTransaction();
@@ -54,16 +58,16 @@ class Database
         $this->database->commit();
 
     }
-    public function search($tableName ) // not working yet
+    public function search(string $tableName, array $atritubeName, array $values ) // not working yet
     {
         $this->database->beginTransaction();
         // SELECT * FROM `try` WHERE www = "test" and id = "1"
         $query = "SELECT * FROM ". $tableName ." WHERE ";
-        $atributes = implode(", ",$atributeName);
-        $query .= $atributes.") VALUES(:";
-        $valueString = implode(", :", $atributeName);
-        $query .= $valueString . ")";
-        
+        for ($i = 0; $i < count($atributeName); $i++) {
+            $query .= $atributeName[$i] . " = :" . $atributeName[$i] ." AND ";
+        }
+        $query = substr($querty, 0, -5);
+       
         $command = $this->database->prepare($query);
         for ($i = 0; $i < count($atributeName); $i++)
         {
