@@ -9,7 +9,7 @@ class Word
         $this->givenWord = $word;
     }
     public function modifyWord($pattern)
-    {
+    {  
         $matchingPatterns = $this->findMatch($pattern);
         $wordSpacing = $this->spaceSyllable($matchingPatterns);
         $modifiedWord = $this->combineStrings($wordSpacing);

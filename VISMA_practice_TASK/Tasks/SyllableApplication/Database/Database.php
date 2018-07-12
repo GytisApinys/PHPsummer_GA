@@ -51,10 +51,10 @@ class Database
         $command->execute();
     }
 
-    public function delete(string $tableName, bool $table = FALSE, array $values = array())
+    public function delete(string $tableName, array $values = [])
     {
         $query = "DELETE FROM ". $tableName; 
-        if ($table == false) {
+        if (!empty($values)) {
             $query .= " WHERE ";
 
             $keysArray = array_keys($values);
@@ -77,11 +77,11 @@ class Database
         }
         $command->execute();
     }
-    public function select(string $tableName, bool $table = FALSE, array $values = []) // if array is empty no need of table
+    public function select(string $tableName, array $values = []) // if array is empty no need of table
     {
         // SELECT * FROM `try` WHERE www = "test" and id = "1"
         $query = "SELECT * FROM ". $tableName;
-        if ($table == false) {
+        if (!empty($values)) {
             $query .= " WHERE ";
 
             $keysArray = array_keys($values);

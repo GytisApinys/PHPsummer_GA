@@ -7,6 +7,7 @@ class File
 {
         public function execute()
         {
+
             $this->welcomeMessage();
             $task = $this->sourceOption();
             // $task = $this->getInput();
@@ -19,7 +20,7 @@ class File
             switch ($action) {
                 case 1:
                     $usingDB = new WorkWithDB;
-                    $input = $usingDB->inputConsole();
+                    $input = $usingDB->executeDBMode();
                     return $input;
                     break;
                 case 2:

@@ -3,6 +3,8 @@ namespace SyllableAplication\Classes;
 
 use SplFileObject;
 use Log\FileLogger;
+use SyllableAplication;
+
 
 class WorkWithFile
 {
@@ -10,10 +12,11 @@ class WorkWithFile
     public function __construct()
     {
         
-        $file = new SplFileObject("C:\Users\Gytis.Apinys\Documents\GitHub\PHPsummer_GA\VISMA_practice_TASK\Tasks\SyllableApplication\Data\Patterns.txt");
+        $file = new SplFileObject(FILENAME);
         while (!$file->eof()) {
         $this->patterns[] = $file->fgets();
         }
+
         // var_dump($this->patterns);
         // die;
     }
@@ -27,7 +30,7 @@ class WorkWithFile
         $this->resultDisplay($finalInput['result']); 
         $executionTime = $finalInput['time'];
         echo "\nProcessing word took ". $executionTime . "sec";
-        FileLogger::info("Program took $executionTime seconds.");
+        FileLogger::debug("Algorithm took $executionTime seconds to exe.");
 
 
 
@@ -36,11 +39,11 @@ class WorkWithFile
     {
         echo "\n";
         echo "|------------------------|\n";
-        echo "|-----Work with File-----|\n";
-        echo "|------------------------|\n";
-        echo "|-----Get words from :---|\n";
-        echo "|-----[1] File-----------|\n";
-        echo "|-----[1] Console--------|\n";
+        echo "|     Work with File     |\n";
+        echo "|                        |\n";
+        echo "|     Get words from :   |\n";
+        echo "|     [1] File           |\n";
+        echo "|     [1] Console        |\n";
         echo "|________________________|\n";
         echo "Enter choice:............\n";
 

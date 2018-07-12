@@ -1,12 +1,24 @@
-
-[2018 Jul 12 4:17]INFO: Program starting.
-
-[2018 Jul 12 4:18]INFO: Program took 1.126070022583 seconds.
-
-[2018 Jul 12 4:20]INFO: Program starting.
-
-[2018 Jul 12 4:28]INFO: Program starting.
-
-[2018 Jul 12 4:28:37]INFO: Program starting.
-
-[2018 Jul 12 4:28:56]INFO: Program took 0.2775399684906 seconds.
+[2018 Jul 12 4:32:11]INFO: Program starting.
+[2018 Jul 12 4:32:19]DEBUG: Program took 1.1639468669891 seconds.
+[2018 Jul 12 5:19:01]INFO: Program starting.
+[2018 Jul 12 5:20:45]INFO: Program starting.
+[2018 Jul 12 5:28:26]INFO: Program starting.
+[2018 Jul 12 5:32:01]INFO: Program starting.
+[2018 Jul 12 5:33:09]INFO: Program starting.
+[2018 Jul 12 5:34:03]INFO: Program starting.
+[2018 Jul 12 5:34:13]DEBUG: Algorithm took 0.27230286598206 seconds to exe.
+[2018 Jul 12 5:37:24]INFO: Program starting.
+[2018 Jul 12 5:37:52]INFO: Program starting.
+[2018 Jul 12 5:39:04]INFO: Program starting.
+[2018 Jul 12 5:45:18]INFO: Program starting.
+[2018 Jul 12 5:47:01]INFO: Program starting.
+[2018 Jul 12 5:47:43]INFO: Program starting.
+[2018 Jul 12 5:47:48]DEBUG: Algorithm took 0.043681144714355 seconds to exe.
+[2018 Jul 12 5:47:50]INFO: Program starting.
+[2018 Jul 12 5:49:10]INFO: Program starting.
+[2018 Jul 12 5:49:39]INFO: Program starting.
+[2018 Jul 12 6:08:08]INFO: Program starting.
+[2018 Jul 12 6:10:16]INFO: Program starting.
+[2018 Jul 12 6:12:23]INFO: Program starting.
+[2018 Jul 12 6:14:44]INFO: Program starting.
+[2018 Jul 12 6:14:56]DEBUG: Algorithm took 0.13247084617615 seconds to exe.
