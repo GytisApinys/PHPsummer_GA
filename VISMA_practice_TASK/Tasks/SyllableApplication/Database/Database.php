@@ -16,67 +16,100 @@ class Database
         }
         $this->database->exec('USE syllable_application');
     }
+    public function beginTransaction()
+    {
+        $this->database->beginTransaction();
+    }
+    public function endTransaction()
+    {
+        $this->database->commit();
+    }
+    public function rollbackTransaction()
+    {
+        $this->database->rollback();
+    }
     //////
     # $db = new Database();
-    # $db->add("try",$one = array( "www"), $two = array( "test"));
+    # $db->insert("try",$one = [
+    #  "name" => "Gytis",
+    #  "surname" => "Apinys"]);
     /////
-    public function add(string $tableName, array $atributeName, array $values)
-    {
-        $this->database->beginTransaction();
 
-        $query = "INSERT INTO ". $tableName ."(";
-        $atributes = implode(", ",$atributeName);
-        $query .= $atributes.") VALUES(:";
-        $valueString = implode(", :", $atributeName);
-        $query .= $valueString . ")";
+    public function insert(string $tableName, array $values)
+    {
+        $atributes = implode(", ", array_keys($values));
+        $valueString = implode(", :", array_values($values));
         
+        $query = "INSERT INTO ". $tableName ."(".$atributes.") VALUES(:".$atributes.")";
+
+        $keysArray = array_keys($values);
+        $valuesArray = array_values($values);
         $command = $this->database->prepare($query);
-        for ($i = 0; $i < count($atributeName); $i++)
-        {
-            $command->bindParam(":".$atributeName[$i], $values[$i]);
+        for ($i = 0; $i < count($values); $i++) {
+            $command->bindParam(":".$keysArray[$i], $valuesArray[$i]);
         }
         $command->execute();
-        $this->database->commit();
     }
 
-    public function delete()
+    public function delete(string $tableName, bool $table = FALSE, array $values = array())
     {
-        $this->database->beginTransaction();
+        $query = "DELETE FROM ". $tableName; 
+        if ($table == false) {
+            $query .= " WHERE ";
 
-        $query = "INSERT INTO ". $tableName ."(";
-        $atributes = implode(", ",$atributeName);
-        $query .= $atributes.") VALUES(:";
-        $valueString = implode(", :", $atributeName);
-        $query .= $valueString . ")";
-        
-        $command = $this->database->prepare($query);
-        for ($i = 0; $i < count($atributeName); $i++)
-        {
-            $command->bindParam(":".$atributeName[$i], $values[$i]);
+            $keysArray = array_keys($values);
+            $valuesArray = array_values($values);
+
+            for ($i = 0; $i < count($values); $i++) {
+                $query .= $keysArray[$i] . " = :" . $keysArray[$i] ." AND ";
+            }
+            $query = substr($query, 0, -5);
+
+            $command = $this->database->prepare($query);
+            
+            for ($i = 0; $i < count($values); $i++)
+            {
+                $command->bindParam(":".$keysArray[$i], $valuesArray[$i]);
+            }
+            
+        }else {
+            $command = $this->database->prepare($query);
         }
         $command->execute();
-        $this->database->commit();
-
     }
-    public function search(string $tableName, array $atritubeName, array $values ) // not working yet
+    public function select(string $tableName, bool $table = FALSE, array $values = []) // if array is empty no need of table
     {
-        $this->database->beginTransaction();
         // SELECT * FROM `try` WHERE www = "test" and id = "1"
-        $query = "SELECT * FROM ". $tableName ." WHERE ";
-        for ($i = 0; $i < count($atributeName); $i++) {
-            $query .= $atributeName[$i] . " = :" . $atributeName[$i] ." AND ";
-        }
-        $query = substr($querty, 0, -5);
-       
-        $command = $this->database->prepare($query);
-        for ($i = 0; $i < count($atributeName); $i++)
-        {
-            $command->bindParam(":".$atributeName[$i], $values[$i]);
+        $query = "SELECT * FROM ". $tableName;
+        if ($table == false) {
+            $query .= " WHERE ";
+
+            $keysArray = array_keys($values);
+            $valuesArray = array_values($values);
+
+            for ($i = 0; $i < count($values); $i++) {
+                $query .= $keysArray[$i] . " = :" . $keysArray[$i] ." AND ";
+            }
+            $query = substr($query, 0, -5);
+           
+            $command = $this->database->prepare($query);
+            for ($i = 0; $i < count($values); $i++)
+            {
+                $command->bindParam(":".$keysArray[$i], $valuesArray[$i]);
+            }
+        }else {
+            $command = $this->database->prepare($query);
         }
         $command->execute();
 
-        $this->database->commit();
-    }
+        //$dbArray = $command->fetchAll(PDO::FETCH_COLUMN, 1);  in code
 
+
+        return $dbArray;
+    }
+    public function update()
+    {
+        //
+    }
 
 }

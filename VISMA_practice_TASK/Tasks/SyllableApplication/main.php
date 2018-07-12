@@ -25,20 +25,32 @@ $autoloader->addNamespace('Database', __DIR__ . '/Database/');
 // echo "Time". date('Y M d');
 FileLogger::info('Program starting.');
 
-$patterns = File::readData(FILENAME);
+// $patterns = File::readData(FILENAME);
 
-$db = new Database();
-$db->add("try",$one = array( "www"), $two = array( "test"));
+// $db = new Database();
+// $db->beginTransaction();
+// // foreach($patterns as $pattern) {
+// //          $pattern = trim($pattern);
+// //          $db->insert("patterns", $values = [
+// //         "pattern" => $pattern
+// //     ]);
+   
+// // }
+// $aa = $db->select("patterns",true);
+// var_dump($aa[20]);
+// $db->endTransaction();
+
+// $db->insert("try",$one = array( "www"), $two = array( "test"));
 // public function add($tableName, $atributeName, $values)
 
-echo "hi";
-die(); 
+// echo "hi";
+// die(); 
 //////////////
 
 
 $objFile = new File();
-$FinalResult = $objFile->execute($patterns);
-$objFile->resultDisplay($FinalResult['result']);
-echo "\nProcessing word took ". $FinalResult['time'] . "sec";
+$FinalResult = $objFile->execute();
+// $objFile->resultDisplay($FinalResult['result']);
+// echo "\nProcessing word took ". $FinalResult['time'] . "sec";
 
 

@@ -5,19 +5,34 @@ use SplFileObject;
 
 class File
 {
-        public function execute($patterns)
+        public function execute()
         {
             $this->welcomeMessage();
-            $task = $this->getSourceOption();
-            $task = $this->getInput();
-            $finalInput = $this->modifyInput($task, $patterns);
-            // var_dump($task);
-            // die;
-            return $finalInput;
+            $task = $this->sourceOption();
+            // $task = $this->getInput();
+            // $finalInput = $this->modifyInput($task, $patterns);
+            // // return $finalInput;
         }
-        public function getSourceOption()
+        public function sourceOption()
         {
-            
+             $action = trim(fgets(STDIN));
+            switch ($action) {
+                case 1:
+                    $usingDB = new WorkWithDB;
+                    $input = $usingDB->inputConsole();
+                    return $input;
+                    break;
+                case 2:
+                    $usingFile = new WorkWithFile;
+                    $input = $usingFile->executeFileMode();
+                    return $input;
+                    break;    
+                default:
+                    echo "Wrong input.";    
+                    die;  //  error expection handler
+             }
+            $word = trim(fgets(STDIN));
+            return $word;
         }
         public function welcomeMessage()
         {

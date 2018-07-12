@@ -1,58 +1,12 @@
 
-[2018 Jul 11]info: Program starting.
+[2018 Jul 12 4:17]INFO: Program starting.
 
-[2018 Jul 11]info: Program starting.
+[2018 Jul 12 4:18]INFO: Program took 1.126070022583 seconds.
 
-[2018 Jul 11]info: Program starting.
+[2018 Jul 12 4:20]INFO: Program starting.
 
-[2018 Jul 11]info: Program starting.
+[2018 Jul 12 4:28]INFO: Program starting.
 
-[2018 Jul 11]info: Program starting.
+[2018 Jul 12 4:28:37]INFO: Program starting.
 
-[2018 Jul 11]info: Program starting.
-
-[2018 Jul 11]info: Program starting.
-
-[2018 Jul 11]info: Program starting.
-
-[2018 Jul 11]info: Program starting.
-
-[2018 Jul 11]info: Program starting.
-
-[2018 Jul 11]info: Program starting.
-
-[2018 Jul 11]info: Program starting.
-
-[2018 Jul 11]info: Program starting.
-
-[2018 Jul 11]info: Program starting.
-
-[2018 Jul 11]info: Program starting.
-
-[2018 Jul 11]info: Program starting.
-
-[2018 Jul 11]info: Program starting.
-
-[2018 Jul 11]info: Program starting.
-
-[2018 Jul 11]info: Program starting.
-
-[2018 Jul 11]info: Program starting.
-
-[2018 Jul 11]info: Program starting.
-
-[2018 Jul 11]info: Program starting.
-
-[2018 Jul 11]info: Program starting.
-
-[2018 Jul 11]info: Program starting.
-
-[2018 Jul 11]info: Program starting.
-
-[2018 Jul 11]info: Program starting.
-
-[2018 Jul 11]info: Program starting.
-
-[2018 Jul 11]info: Program starting.
-
-[2018 Jul 11]info: Program starting.
+[2018 Jul 12 4:28:56]INFO: Program took 0.2775399684906 seconds.

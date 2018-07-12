@@ -1,2 +1,12 @@
 {
+    "database.connections": [
+        {
+            "type": "mysql",
+            "name": "127.0.0.1 (mysql)",
+            "host": "127.0.0.1:3306",
+            "user": "root",
+            "password": "Gytukas123",
+            "database": "syllable_application"
+        }
+    ]
 }
