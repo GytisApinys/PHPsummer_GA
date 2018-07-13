@@ -92,8 +92,7 @@ class WorkWithDB
                         "word" => $word,
                         "word_finished" => $word_syllabled
                     ]);
-                    // $id = $this->db->lastInsertId();
-                    // echo "$id is ID of $word\n";
+                    $insertedWordID = $this->db->lastInsertId();
                     echo "$id is ID of $word\n";
 
 
