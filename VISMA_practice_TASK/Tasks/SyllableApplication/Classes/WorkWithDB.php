@@ -94,6 +94,7 @@ class WorkWithDB
                     ]);
                     // $id = $this->db->lastInsertId();
                     // echo "$id is ID of $word\n";
+                    echo "$id is ID of $word\n";
 
 
                 }

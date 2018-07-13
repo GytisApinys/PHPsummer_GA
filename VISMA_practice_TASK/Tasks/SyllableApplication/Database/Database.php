@@ -111,5 +111,10 @@ class Database
     {
         //
     }
+    public function lastInsertId()
+    {
+        $lastUsedID = $this->database->lastInsertId();
+        return $lastUsedID;
+    }
 
 }
