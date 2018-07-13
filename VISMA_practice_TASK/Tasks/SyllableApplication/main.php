@@ -50,7 +50,7 @@ FileLogger::info('Program starting.');
 
 
 $objFile = new File();
-$FinalResult = $objFile->execute();
+$objFile->execute();
 // $objFile->resultDisplay($FinalResult['result']);
 // echo "\nProcessing word took ". $FinalResult['time'] . "sec";
 

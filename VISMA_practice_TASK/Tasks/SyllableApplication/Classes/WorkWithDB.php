@@ -3,10 +3,16 @@ namespace SyllableAplication\Classes;
 
 use SplFileObject;
 use Database\Database;
+use PDO;
 
 class WorkWithDB
 {
     private $patterns;
+    private $db;
+    public function __construct()
+    {
+        $this->db = new Database();
+    }
     public function message()
     {
         echo "\n";
@@ -60,7 +66,7 @@ class WorkWithDB
         foreach($this->patterns as $pattern) {
             $pattern = trim(pattern);
             $db->insert("patterns", $values = [
-            "pattern" => $pattern
+             "pattern" => $pattern
           ]);
         }
 
@@ -70,25 +76,32 @@ class WorkWithDB
     {
         $InputHand = new InputHand;
         $wordList = $InputHand->inputConsole();
-        $db = new Database();
-        $db->beginTransaction();
-
-
+        $this->db->beginTransaction();
+        $patternsObjFromDB = $this->db->select("patterns");
+        $patternsDB = $patternsObjFromDB->fetchAll(PDO::FETCH_COLUMN, 1);
+        
         if (is_array($wordList)) {
             foreach ($wordList as $word) {
                 if (preg_match("/[\w]/",$word) != NULL) {
                     $objWord = new Word($word);
-                $word_syllabled = $objWord->modifyWord(/*$this->patterns need to supply from DB*/);
-                    $db->insert("words", $values = [
+                    $word_syllabled = $objWord->modifyWord($patternsDB);
+                    $usedPatterns = $objWord->findMatch($patternsDB);
+                    // add insert into connections
+
+                    $this->db->insert("words", $values = [
                         "word" => $word,
                         "word_finished" => $word_syllabled
                     ]);
+                    // $id = $this->db->lastInsertId();
+                    // echo "$id is ID of $word\n";
+
 
                 }
             }
         } else {
             // error handler
         }
+        $this->db->endTransaction();
     }
     public function checkDoneWords()
     {

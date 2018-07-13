@@ -15,7 +15,7 @@ class Word
         $modifiedWord = $this->combineStrings($wordSpacing);
         return $modifiedWord;
     }
-    private function findMatch($patterns)
+    public function findMatch($patterns)
     {
         foreach ($patterns as $syllable) {
             $Clean_syllable = preg_replace("/[\d\s.]+/", "", $syllable);

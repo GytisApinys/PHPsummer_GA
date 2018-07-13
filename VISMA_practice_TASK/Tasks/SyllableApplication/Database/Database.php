@@ -35,13 +35,13 @@ class Database
     #  "surname" => "Apinys"]);
     /////
 
-    public function insert(string $tableName, array $values)
+    public function insert(string $tableName, array $values) //??
     {
         $atributes = implode(", ", array_keys($values));
-        $valueString = implode(", :", array_values($values));
+        $valueString = implode(", :", array_keys($values));
         
-        $query = "INSERT INTO ". $tableName ."(".$atributes.") VALUES(:".$atributes.")";
-
+        $query = "INSERT INTO ". $tableName ."(".$atributes.") VALUES(:".$valueString.")";
+        
         $keysArray = array_keys($values);
         $valuesArray = array_values($values);
         $command = $this->database->prepare($query);
@@ -105,7 +105,7 @@ class Database
         //$dbArray = $command->fetchAll(PDO::FETCH_COLUMN, 1);  in code
 
 
-        return $dbArray;
+        return $command;
     }
     public function update()
     {
