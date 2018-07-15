@@ -13,7 +13,7 @@ use AutoLoader\Psr4Autoloader;
 use SyllableAplication\Classes\File;
 use SyllableAplication\Classes\Word;
 
-define("FILENAME", "C:\Users\Gytis.Apinys\Documents\GitHub\PHPsummer_GA\VISMA_practice_TASK\Tasks\SyllableApplication\Data\Patterns.txt");
+define("FILENAME", __DIR__."\Data\Patterns.txt");
 
 // const FILENAME = "C:\Users\Gytis.Apinys\Documents\GitHub\PHPsummer_GA\VISMA_practice_TASK\Tasks\SyllableApplication\Data\Patterns.txt";
 
