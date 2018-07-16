@@ -15,13 +15,10 @@ class Word
         $modifiedWord = $this->combineStrings($wordSpacing);
         return $modifiedWord;
     }
-    public function findMatch($patterns)
+    public function findMatch(array $patterns)
     {
         foreach ($patterns as $syllable) {
             $Clean_syllable = preg_replace("/[\d\s.]+/", "", $syllable);
-            $patternlen = strlen(trim($syllable)) - 1;
-            $lastPos = 0;
-            $position = 0;
             if (preg_match('/^[.]/', $syllable) != null) {
                 $position = stripos($this->givenWord, $Clean_syllable);
                 if ($position !== false && substr($this->givenWord, 0, strlen($Clean_syllable)) === $Clean_syllable) {
