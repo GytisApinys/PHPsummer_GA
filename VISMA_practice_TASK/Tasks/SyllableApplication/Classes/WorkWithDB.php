@@ -1,4 +1,5 @@
 <?php
+
 namespace SyllableAplication\Classes;
 
 use SplFileObject;
@@ -9,10 +10,12 @@ class WorkWithDB
 {
     private $patterns;
     private $db;
+
     public function __construct()
     {
         $this->db = new Database();
     }
+
     public function message()
     {
         echo "\n";
@@ -26,12 +29,14 @@ class WorkWithDB
         echo "|________________________|\n";
         echo "Enter choice:............\n";
     }
+
     public function executeDBMode()
     {
         $this->message();
         $optionInput = $this->getOptionInput();
 
     }
+
     public function getOptionInput()
     {
         $action = trim(fgets(STDIN));
@@ -41,20 +46,21 @@ class WorkWithDB
                 break;
             case 2:
                 $this->addWord();
-                break;    
+                break;
             case 3:
                 $this->checkDoneWords();
                 break;
             default:
-                echo "Wrong input.";    
-                die;  //  error expection handler
-         }
+                echo "Wrong input.";
+                die;  //  error exception handler
+        }
     }
+
     public function updateDB()
     {
         $file = new SplFileObject(FILENAME);
         while (!$file->eof()) {
-        $this->patterns[] = $file->fgets();
+            $this->patterns[] = $file->fgets();
         }
         $db = new Database();
         $db->beginTransaction();
@@ -63,39 +69,52 @@ class WorkWithDB
         $db->delete("word_patterns");
         $db->delete("words");
 
-        foreach($this->patterns as $pattern) {
+        foreach ($this->patterns as $pattern) {
             $pattern = trim(pattern);
             $db->insert("patterns", $values = [
-             "pattern" => $pattern
-          ]);
+                "pattern" => $pattern
+            ]);
         }
 
         $db->endTransaction();
     }
+
     public function addWord()
     {
         $InputHand = new InputHand;
         $wordList = $InputHand->inputConsole();
         $this->db->beginTransaction();
         $patternsObjFromDB = $this->db->select("patterns");
-        $patternsDB = $patternsObjFromDB->fetchAll(PDO::FETCH_COLUMN, 1);
-        
+        $patternsDB = $patternsObjFromDB->fetchAll(PDO::FETCH_ASSOC);
+        foreach ($patternsDB as $entry) {
+            $patterns[] = $entry["pattern"];
+            $patternsID[] = $entry["id"];
+        }
+//        $key = array_search(".ant4", $patterns);
+//        $key = $patternsID[$key];
+//        var_dump($key);
         if (is_array($wordList)) {
             foreach ($wordList as $word) {
-                if (preg_match("/[\w]/",$word) != NULL) {
+                if (preg_match("/[\w]/", $word) != NULL) {
                     $objWord = new Word($word);
-                    $word_syllabled = $objWord->modifyWord($patternsDB);
-                    $usedPatterns = $objWord->findMatch($patternsDB);
+                    $wordSyllabled = $objWord->modifyWord($patterns);
+                    $usedPatterns = $objWord->findMatch($patterns);
                     // add insert into connections
 
                     $this->db->insert("words", $values = [
                         "word" => $word,
-                        "word_finished" => $word_syllabled
+                        "word_finished" => $wordSyllabled
                     ]);
                     $insertedWordID = $this->db->lastInsertId();
-                    echo "$id is ID of $word\n";
-
-
+                    var_dump($usedPatterns); // fix this later
+                    foreach ($usedPatterns as $entry) {
+                        $key = array_search($entry, $patterns);
+                        $key = $patternsID[$key];
+                        $this->db->insert("word_patterns", $values = [
+                            "word_id" => $insertedWordID,
+                            "syllable_id" => $key
+                        ]);
+                    }
                 }
             }
         } else {
@@ -103,6 +122,7 @@ class WorkWithDB
         }
         $this->db->endTransaction();
     }
+
     public function checkDoneWords()
     {
 
