@@ -1,24 +1,18 @@
 <?php
 
+class hello
+{
+    public function get()
+    {
+        echo "getto";
+    }
+    public function put()
+    {
+        echo "put";
+    }
+}
 
-// $tableName = 'Info';
-// $atributeName = array('ID','Name','Surname');
-// $value = array('1','Gytis','Apinys');
-// $s = count($value);
-
-// $query = "SELECT * FROM ". $tableName ." WHERE ";
-// for ($i = 0; $i < count($atributeName); $i++) {
-//     $query .= $atributeName[$i] . " = :" . $atributeName[$i] ." AND ";
-// }
-// $query = substr($query, 0, -5);
-
-// echo $query;
-
-$x = [
-    "Mister" => "Gytis",
-    "Mistress" => "Juli"
-];
-$pattern = 
-$values = [
-    "pattern" => $pattern
-];
+    $hh = "hello";
+    $x = new $hh();
+    $j = "put";
+    $x->$j();

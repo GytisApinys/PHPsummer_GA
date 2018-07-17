@@ -84,8 +84,8 @@ class WorkWithDB
         $InputHand = new InputHand;
         $wordList = $InputHand->inputConsole();
         $this->db->beginTransaction();
-        $patternsObjFromDB = $this->db->select("patterns");
-        $patternsDB = $patternsObjFromDB->fetchAll(PDO::FETCH_ASSOC);
+        $patternsDB = $this->db->select("patterns");
+//        $patternsDB = $patternsObjFromDB->fetchAll(PDO::FETCH_ASSOC);
         foreach ($patternsDB as $entry) {
             $patterns[] = $entry["pattern"];
             $patternsID[] = $entry["id"];

@@ -102,10 +102,10 @@ class Database
         }
         $command->execute();
 
-        //$dbArray = $command->fetchAll(PDO::FETCH_COLUMN, 1);  in code
+        $dbArray = $command->fetchAll(PDO::FETCH_ASSOC);
 
 
-        return $command;
+        return $dbArray;
     }
     public function update()
     {
