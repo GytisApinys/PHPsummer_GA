@@ -1,9 +1,9 @@
 <?php
-namespace SyllableAplication\Classes;
+namespace SyllableApplication\Classes;
 
 use SplFileObject;
 use Log\FileLogger;
-use SyllableAplication;
+use SyllableApplication;
 
 
 class WorkWithFile

@@ -25,12 +25,10 @@ class WordModel
 
     public function getAllWords()
     {
-
     }
 
     public function getWordByID(string $id)
     {
-
     }
 
     public function postWord()

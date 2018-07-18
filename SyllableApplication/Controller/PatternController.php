@@ -11,7 +11,7 @@ namespace Controller;
 
 use Model\PatternsModel;
 
-class PatternController
+class PatternController implements ControllerInterface
 {
     private $urlActionString;
     private $patternModel;
@@ -20,30 +20,9 @@ class PatternController
     {
         $this->patternModel = new PatternsModel();
         $this->urlActionString = $urlString;
-        $this->action();
     }
 
-    public function action()
-    {
-        if (isset($_SERVER['REQUEST_METHOD'])) {
-            switch ($_SERVER['REQUEST_METHOD']) {
-                case "GET":
-                    $this->get();
-                    break;
-                case "POST":
-                    $this->post();
-                    break;
-                case "DELETE":
-                    $this->delete();
-                    break;
-                case "UPDATE":
-                    $this->update();
-                    break;
-            }
-        }
-    }
-
-    private function get()
+    public function get(): void
     {
         if (count($this->urlActionString) == 1) {
             $this->patternModel->getAllPatterns();
@@ -53,7 +32,7 @@ class PatternController
         }
     }
 
-    private function post()
+    public function post(): void
     {
         if (count($this->urlActionString) == 1) {
             $this->patternModel->postPattern();
@@ -63,7 +42,7 @@ class PatternController
         }
     }
 
-    private function delete()
+    public function delete(): void
     {
         if (count($this->urlActionString) == 1) {
             $this->patternModel->deleteAllPatterns();
@@ -73,9 +52,8 @@ class PatternController
         }
     }
 
-    private function update()
+    public function update(): void
     {
-
         if (count($this->urlActionString) == 1) {
             echo "Wrong input";
         } elseif (count($this->urlActionString) == 2) {

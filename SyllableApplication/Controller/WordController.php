@@ -11,7 +11,7 @@ namespace Controller;
 
 use Model\WordModel;
 
-class WordController
+class WordController implements ControllerInterface
 {
     private $urlActionString;
     private $wordModel;
@@ -20,25 +20,18 @@ class WordController
     {
         $this->wordModel = new WordModel();
         $this->urlActionString = $urlString;
-        echo "hello3";
-//        $this->action();
     }
 
-
-
-    private function get()
+    public function get(): void
     {
-        echo "helloooo";
-        die;
         if (count($this->urlActionString) == 1) {
             $this->wordModel->getAllWords();
-
         } elseif (count($this->urlActionString) == 2) {
             $this->wordModel->getWordByID($this->urlActionString[1]);
         }
     }
 
-    private function post()
+    public function post(): void
     {
         if (count($this->urlActionString) == 1) {
             $this->wordModel->postWord();
@@ -48,7 +41,7 @@ class WordController
         }
     }
 
-    private function delete()
+    public function delete(): void
     {
         if (count($this->urlActionString) == 1) {
             $this->wordModel->deleteAllWords();
@@ -58,7 +51,7 @@ class WordController
         }
     }
 
-    private function update()
+    public function update(): void
     {
         if (count($this->urlActionString) == 2) {
             echo "Wrong input";
@@ -66,4 +59,5 @@ class WordController
             $this->wordModel->updateWordByID($this->urlActionString[1]);
         }
     }
+
 }

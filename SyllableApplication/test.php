@@ -8,7 +8,7 @@ class hello
     }
     public function put()
     {
-        echo "put";
+        echo "putto";
     }
 }
 

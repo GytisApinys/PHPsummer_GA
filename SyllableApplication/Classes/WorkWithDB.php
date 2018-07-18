@@ -1,6 +1,6 @@
 <?php
 
-namespace SyllableAplication\Classes;
+namespace SyllableApplication\Classes;
 
 use SplFileObject;
 use Database\Database;

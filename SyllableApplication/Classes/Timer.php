@@ -1,5 +1,5 @@
 <?php
-namespace SyllableAplication\Classes;
+namespace SyllableApplication\Classes;
 
 class Timer 
 {

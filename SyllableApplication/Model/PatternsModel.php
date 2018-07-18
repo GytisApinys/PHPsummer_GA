@@ -9,6 +9,8 @@
 namespace Model;
 
 
+use Database\Database;
+
 class PatternsModel
 {
     private $db;
@@ -21,27 +23,27 @@ class PatternsModel
         $this->db = new Database();
     }
 
-    public function getAllPatterns()
+    public function getAllPatterns(): void
     {
 
     }
 
-    public function getPatternByID(string $id)
+    public function getPatternByID(string $id): void
     {
 
     }
 
-    public function postPattern()
+    public function postPattern(): void
     {
 
     }
 
-    public function deleteAllPatterns()
+    public function deleteAllPatterns(): void
     {
 
     }
 
-    public function deletePatternsByID(string $id)
+    public function deletePatternsByID(string $id): void
     {
 
     }
