@@ -183,4 +183,13 @@ class Psr4Autoloader
         }
         return false;
     }
+//    public function addAllNamespaces()
+//    {
+//        $this->addNamespace('SyllableApplication\Classes', __DIR__ . '/Classes/');
+//        $this->addNamespace('Log', __DIR__ . '/Log/');
+//        $this->addNamespace('Database', __DIR__ . '/Database/');
+//        $this->addNamespace('Api', __DIR__ . '/Api/');
+//        $this->addNamespace('Controller', __DIR__ . '/Controller/');
+//        $this->addNamespace('Model', __DIR__ . '/Model/');
+//    }
 }

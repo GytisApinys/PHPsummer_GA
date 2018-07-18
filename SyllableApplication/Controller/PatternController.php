@@ -22,7 +22,7 @@ class PatternController implements ControllerInterface
         $this->urlActionString = $urlString;
     }
 
-    public function get(): void
+    public function get(array $phpInput): void
     {
         if (count($this->urlActionString) == 1) {
             $this->patternModel->getAllPatterns();
@@ -32,7 +32,7 @@ class PatternController implements ControllerInterface
         }
     }
 
-    public function post(): void
+    public function post(array $phpInput): void
     {
         if (count($this->urlActionString) == 1) {
             $this->patternModel->postPattern();
@@ -42,7 +42,7 @@ class PatternController implements ControllerInterface
         }
     }
 
-    public function delete(): void
+    public function delete(array $phpInput): void
     {
         if (count($this->urlActionString) == 1) {
             $this->patternModel->deleteAllPatterns();
@@ -52,7 +52,7 @@ class PatternController implements ControllerInterface
         }
     }
 
-    public function update(): void
+    public function put(array $phpInput): void
     {
         if (count($this->urlActionString) == 1) {
             echo "Wrong input";

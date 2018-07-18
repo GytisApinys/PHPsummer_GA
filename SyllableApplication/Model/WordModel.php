@@ -10,44 +10,68 @@ namespace Model;
 
 
 use Database\Database;
+use Database\QueryBuilder;
 
 class WordModel
 {
     private $db;
+    private $tableName = "words";
 
-    /**
-     * WordModel constructor.
-     */
     public function __construct()
     {
         $this->db = new Database();
     }
 
-    public function getAllWords()
+    public function getAllWords(): array
     {
+        $query = (new QueryBuilder())
+            ->select()
+            ->from($this->tableName);
+        $output = $this->db->executeWithResult($query);
+        return $output;
     }
 
-    public function getWordByID(string $id)
+    public function getWordByID(string $id): array
     {
+        $query = (new QueryBuilder())
+            ->select()
+            ->from($this->tableName)
+            ->where(["id = $id"]);
+        $output = $this->db->executeWithResult($query);
+        return $output;
     }
 
-    public function postWord()
+    public function postWord(array $phpInput)
     {
-
+        $query = (new QueryBuilder())
+            ->insert($this->tableName)
+            ->value($phpInput);
+        $this->db->executeWithoutResult($query);
     }
 
     public function deleteAllWords()
     {
-
+        $query = (new QueryBuilder())
+            ->delete($this->tableName);
+        $this->db->executeWithoutResult($query);
     }
 
     public function deleteWordByID(string $id)
     {
-
+        $query = (new QueryBuilder())
+            ->delete($this->tableName)
+            ->where(["id = $id"]);
+        $this->db->executeWithoutResult($query);
     }
 
-    public function updateWordByID(string $id)
+    public function updateWordByID(string $id, array $phpInput)
     {
+        $query = (new QueryBuilder())
+            ->update($this->tableName)
+            ->set($phpInput)
+            ->where(["id = $id"]);
+        echo $query;
 
+        $this->db->executeWithoutResult($query);
     }
 }

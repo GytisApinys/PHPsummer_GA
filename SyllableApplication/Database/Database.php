@@ -116,5 +116,18 @@ class Database
         $lastUsedID = $this->database->lastInsertId();
         return $lastUsedID;
     }
+    public function executeWithResult(string $query): array
+    {
+        $command = $this->database->prepare($query);
+        $command->execute();
+        $dbArray = $command->fetchAll(PDO::FETCH_ASSOC);
+        return $dbArray;
+
+    }
+    public function executeWithoutResult(string $query): void
+    {
+        $command = $this->database->prepare($query);
+        $command->execute();
+    }
 
 }

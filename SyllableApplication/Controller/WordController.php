@@ -16,32 +16,35 @@ class WordController implements ControllerInterface
     private $urlActionString;
     private $wordModel;
 
-    public function __construct(array $urlString)
+    public function __construct(array $urlString, WordModel $wordModel)
     {
-        $this->wordModel = new WordModel();
         $this->urlActionString = $urlString;
+        $this->wordModel = $wordModel;
     }
 
-    public function get(): void
+    public function get(array $phpInput): void
     {
         if (count($this->urlActionString) == 1) {
-            $this->wordModel->getAllWords();
+            $output = $this->wordModel->getAllWords();
+            echo json_encode($output);
+
         } elseif (count($this->urlActionString) == 2) {
-            $this->wordModel->getWordByID($this->urlActionString[1]);
+            $output = $this->wordModel->getWordByID($this->urlActionString[1]);
+            echo json_encode($output);
         }
     }
 
-    public function post(): void
+    public function post(array $phpInput): void
     {
         if (count($this->urlActionString) == 1) {
-            $this->wordModel->postWord();
+            $this->wordModel->postWord($phpInput);
 
         } elseif (count($this->urlActionString) != 1) {
             echo "Wrong input";
         }
     }
 
-    public function delete(): void
+    public function delete(array $phpInput): void
     {
         if (count($this->urlActionString) == 1) {
             $this->wordModel->deleteAllWords();
@@ -51,12 +54,12 @@ class WordController implements ControllerInterface
         }
     }
 
-    public function update(): void
+    public function put(array $phpInput): void
     {
         if (count($this->urlActionString) == 2) {
-            echo "Wrong input";
+            $this->wordModel->updateWordByID($this->urlActionString[1], $phpInput);
         } elseif (count($this->urlActionString) != 2) {
-            $this->wordModel->updateWordByID($this->urlActionString[1]);
+            echo "Wrong input";
         }
     }
 

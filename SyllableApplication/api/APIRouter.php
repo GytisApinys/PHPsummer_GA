@@ -27,11 +27,11 @@ class APIRouter //
     {
         switch ($this->entrylist[0]) {
             case "word":
-                $controllerName = "WordController";
+                $controllerName = "Word";
                 return $controllerName;
                 break;
             case "patterns":
-                $controllerName = "PatternController";
+                $controllerName = "Pattern";
                 return $controllerName;
                 break;
             default:
@@ -42,14 +42,18 @@ class APIRouter //
 
     public function execute()
     {
+        $phpInput = json_decode(file_get_contents("php://input"), true);
+        if ($phpInput == NULL) $phpInput = [];
         $controllerName = $this->directions();
-        $controllerName= 'Controller\\'.$controllerName;  //
+        $modelName = 'Model\\' . $controllerName . "Model";
+        $controllerName = 'Controller\\' . $controllerName . "Controller";
         $methodName = strtolower($_SERVER['REQUEST_METHOD']);
         try {
-            $controllerExecute = new $controllerName($this->entrylist);
-            $controllerExecute->$methodName();
+            $modelObj = new $modelName();
+            $controllerExecute = new $controllerName($this->entrylist, $modelObj);
+            $controllerExecute->$methodName($phpInput);
         } catch (\Exception  $e) {
-            echo "Error". $e->getMessage();
+            echo "Error" . $e->getMessage();
         }
     }
 }

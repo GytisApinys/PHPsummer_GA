@@ -25,7 +25,7 @@ $autoloader->addNamespace('Model', __DIR__ . '/Model/');
 
 FileLogger::info('Program starting.');
 if (isset($_SERVER['REQUEST_METHOD'])) {
-    $apiPath = $_GET['q']; // get entered
+    $apiPath = $_GET['q'];
 //    $rest = new SyllableAPI($apiPath, $db);
     $router = new APIRouter($apiPath);
 

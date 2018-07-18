@@ -11,56 +11,85 @@ namespace Database;
 
 class QueryBuilder
 {
-    private $fields = [];
-    private $from = [];
-    private $where = [];
+    private $action = "";
+    private $values = "";
+    private $from = "";
+    private $where = "";
 
-    public function select(array $fields): QueryBuilder
+    public function __construct()
     {
-        $this->fields = $fields;
+    }
+
+    public function select(array $atributes = []): QueryBuilder
+    {
+        if ($atributes == []) {
+            $this->action = "SELECT * ";
+        } else {
+            $this->action = "SELECT " . implode(", ", $atributes);
+        }
         return $this;
     }
 
-//    public function insert(array $fields): QueryBuilder
-//    {
-//        $this->fields = $fields;
-//        return $this;
-//    }
-//
-//    public function delete(array $fields): QueryBuilder
-//    {
-//        $this->fields = $fields;
-//        return $this;
-//    }
-//
-//    public function update(array $fields): QueryBuilder
-//    {
-//        $this->fields = $fields;
-//        return $this;
-//    }
-
-    public function from(string $table, string $alias): QueryBuilder
+    public function insert(string $tableName): QueryBuilder
     {
-        $this->from[] = $table . ' AS ' . $alias;
+        $this->action = "INSERT INTO " . $tableName;
+        return $this;
+    }
+
+    public function delete(string $tableName): QueryBuilder
+    {
+        $this->action = "DELETE FROM " . $tableName;
+        return $this;
+    }
+
+    public function update(string $tableName): QueryBuilder
+    {
+        $this->action = "UPDATE " . $tableName;
 
         return $this;
     }
 
-    public function where(string $condition): QueryBuilder
+    public function from(string $tables): QueryBuilder
     {
-        $this->where[] = $condition;
+        if (is_array($tables)) {
+            $this->from = "FROM " . implode(", ", $tables);
+        } else {
+            $this->from = "FROM $tables";
+        }
+        return $this;
+    }
+
+    public function where(array $conditions): QueryBuilder
+    {
+        $this->where = "WHERE " . implode(" AND ", $conditions);
+        return $this;
+    }
+
+    public function value(array $valuesByKey): QueryBuilder
+    {
+        $this->values = "(" . implode(", ", array_keys($valuesByKey[0])) . ") VALUES ";
+        foreach ($valuesByKey as $key => $value) {
+            $this->values .= "('" . implode("', '", $value) . "')";
+            if ($key != (count($valuesByKey) - 1)) $this->values .= ", ";
+        }
+        return $this;
+    }
+
+    public function set(array $valuesByKey): QueryBuilder
+    {
+        $temp = [];
+        var_dump($valuesByKey);
+        foreach ($valuesByKey as $key => $value) {
+            $temp[] = "$key='$value'";
+        }
+        $this->values = " SET " . implode(", ", $temp);
 
         return $this;
     }
 
     public function __toString(): string
     {
-        return sprintf(
-            'SELECT %s FROM %s WHERE %s',
-            join(', ', $this->fields),
-            join(', ', $this->from),
-            join(' AND ', $this->where)
-        );
+        return $this->action . " " . $this->from . " " . $this->values . " " . $this->where;
     }
 
 }
