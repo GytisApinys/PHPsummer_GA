@@ -8,10 +8,6 @@
 
 namespace Api;
 
-//use Controller\WordController;
-use Controller\PatternController;
-use Controller;
-use Controller\WordController;
 
 class APIRouter //
 {
@@ -19,8 +15,10 @@ class APIRouter //
 
     public function __construct(string $apiURL)
     {
+        if (substr($apiURL, -1) == '/') {
+            $apiURL = substr($apiURL, 0, -1);
+        }
         $this->entrylist = explode('/', $apiURL);
-
     }
 
     public function directions()
@@ -37,6 +35,7 @@ class APIRouter //
             default:
                 echo "Wrong input.";
         }
+        return null;
     }
 
     public function execute(string $apiMethod)

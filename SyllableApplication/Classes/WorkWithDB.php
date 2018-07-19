@@ -33,8 +33,7 @@ class WorkWithDB
     public function executeDBMode()
     {
         $this->message();
-        $optionInput = $this->getOptionInput();
-
+        $this->getOptionInput();
     }
 
     public function getOptionInput()

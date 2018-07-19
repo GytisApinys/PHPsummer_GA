@@ -9,37 +9,35 @@
 namespace Controller;
 
 
-use Model\PatternsModel;
+use Model\PatternModel;
 
 class PatternController implements ControllerInterface
 {
     private $urlActionString;
     private $patternModel;
 
-    public function __construct(array $urlString)
+    public function __construct(array $urlString, PatternModel $patternModel)
     {
-        $this->patternModel = new PatternsModel();
         $this->urlActionString = $urlString;
-        $this->urlActionString = $urlString;
-        $this->urlActionString = $urlString;
-        $this->urlActionString = $urlString;
-        $this->urlActionString = $urlString;
+        $this->patternModel = $patternModel;
     }
 
     public function get(): void
     {
         if (count($this->urlActionString) == 1) {
-            $this->patternModel->getAllPatterns();
+            $output = $this->patternModel->getAllPatterns();
+            echo json_encode($output);
 
         } elseif (count($this->urlActionString) == 2) {
-            $this->patternModel->getPatternByID($this->urlActionString[1]);
+            $output = $this->patternModel->getPatternByID($this->urlActionString[1]);
+            echo json_encode($output);
         }
     }
 
     public function post(array $phpInput): void
     {
         if (count($this->urlActionString) == 1) {
-            $this->patternModel->postPattern();
+            $this->patternModel->postPattern($phpInput);
 
         } elseif (count($this->urlActionString) == 2) {
             echo "Wrong input";
@@ -58,10 +56,10 @@ class PatternController implements ControllerInterface
 
     public function put(array $phpInput): void
     {
-        if (count($this->urlActionString) == 1) {
+        if (count($this->urlActionString) == 2) {
+            $this->patternModel->updatePatternsByID($this->urlActionString[1], $phpInput);
+        } elseif (count($this->urlActionString) != 2) {
             echo "Wrong input";
-        } elseif (count($this->urlActionString) == 2) {
-            $this->patternModel->updatePatternsByID($this->urlActionString[1]);
         }
     }
 }

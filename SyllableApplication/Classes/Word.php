@@ -1,20 +1,24 @@
 <?php
+
 namespace SyllableApplication\Classes;
 
 class Word
 {
     private $givenWord;
+
     public function __construct($word)
     {
         $this->givenWord = $word;
     }
+
     public function modifyWord($pattern)
-    {  
+    {
         $matchingPatterns = $this->findMatch($pattern);
         $wordSpacing = $this->spaceSyllable($matchingPatterns);
         $modifiedWord = $this->combineStrings($wordSpacing);
         return $modifiedWord;
     }
+
     public function findMatch(array $patterns)
     {
         foreach ($patterns as $syllable) {
@@ -31,48 +35,45 @@ class Word
                 }
             } elseif (preg_match("/$Clean_syllable/i", $this->givenWord) != null) {
                 preg_match_all("/$Clean_syllable/i", $this->givenWord, $possitionArray, PREG_OFFSET_CAPTURE);
-                for ($i=0; $i < count($possitionArray[0]) ;$i++) {
+                for ($i = 0; $i < count($possitionArray[0]); $i++) {
                     $found_patterns[trim($syllable)][] = $possitionArray[0][$i][1];
                 }
             }
         }
-       if (empty($found_patterns)) {
+        if (empty($found_patterns)) {
             $found_patterns = NULL;
         }
-        return $found_patterns; 
+        return $found_patterns;
     }
+
     private function spaceSyllable($matchingPatterns)
     {
         $word_spaces = array_fill(0, strlen($this->givenWord), 0);
         if (!empty($matchingPatterns)) {
-            foreach($matchingPatterns as $key => $values) {
+            foreach ($matchingPatterns as $key => $values) {
                 $key_lng = strlen($key);
                 if ($key[0] == '.') {
                     $key_lng--;
                     $key = substr($key, 1);
                 }
-                if ($key[$key_lng-1] == '.')  {
+                if ($key[$key_lng - 1] == '.') {
                     $key_lng--;
-                    $key = substr($key,0, -1);
+                    $key = substr($key, 0, -1);
                 }
                 $key = str_split($key);
 
                 foreach ($values as $value) {
-                    if (($value - 1 ) < 0) {
-                        $letterNumber=0;
+                    if (($value - 1) < 0) {
+                        $letterNumber = 0;
+                    } else {
+                        $letterNumber = $value - 1;
                     }
-                    else {
-                        $letterNumber=$value-1;
-                    }
-                    for ($i = (($value-1)<0) ? 1 : 0 ; $i < $key_lng; $i++) {
-                        if (is_numeric($key[$i]))
-                        {
-                            if ($word_spaces[$letterNumber] < $key[$i])
-                            {
+                    for ($i = (($value - 1) < 0) ? 1 : 0; $i < $key_lng; $i++) {
+                        if (is_numeric($key[$i])) {
+                            if ($word_spaces[$letterNumber] < $key[$i]) {
                                 $word_spaces[$letterNumber] = $key[$i];
                             }
-                        } else 
-                        {
+                        } else {
                             $letterNumber++;
                         }
                     }
@@ -81,6 +82,7 @@ class Word
         }
         return $word_spaces;
     }
+
     private function combineStrings($spacing)
     {
         $formated_word = '';
@@ -88,20 +90,23 @@ class Word
         $word = str_split($this->givenWord);
         $spacing_count = count($spacing);
 
-        for($i = 0 ; $i < $word_lng; $i++) {
+        for ($i = 0; $i < $word_lng; $i++) {
             $temp1 = $word[$i];
-            if($spacing_count !== $i) 
-            {
+            if ($spacing_count !== $i) {
                 $temp2 = $spacing[$i];
                 $temp2 = (float)$temp2;
-                if($temp2 % 2 !== 0) {$temp2 = '-';} else {$temp2 = '';};
+                if ($temp2 % 2 !== 0) {
+                    $temp2 = '-';
+                } else {
+                    $temp2 = '';
+                };
                 $formated_word = $formated_word . $temp1 . $temp2;
-            }else {
+            } else {
                 $formated_word = $formated_word . $temp1;
             }
         }
-        $lastPosCheck = $formated_word[strlen($formated_word) -1 ];
-        if ($lastPosCheck=='-') {
+        $lastPosCheck = $formated_word[strlen($formated_word) - 1];
+        if ($lastPosCheck == '-') {
             $formated_word = substr($formated_word, 0, -1);
         }
         return $formated_word;

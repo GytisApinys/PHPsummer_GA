@@ -12,17 +12,17 @@ namespace Model;
 use Database\Database;
 use Database\QueryBuilder;
 
-class WordModel
+class PatternModel
 {
     private $db;
-    private $tableName = "words";
+    private $tableName = "patterns";
 
     public function __construct()
     {
         $this->db = new Database();
     }
 
-    public function getAllWords(): array
+    public function getAllPatterns(): array
     {
         $query = (new QueryBuilder())
             ->select()
@@ -31,7 +31,7 @@ class WordModel
         return $output;
     }
 
-    public function getWordByID(string $id): array
+    public function getPatternByID(string $id): array
     {
         $query = (new QueryBuilder())
             ->select()
@@ -41,7 +41,7 @@ class WordModel
         return $output;
     }
 
-    public function postWord(array $phpInput)
+    public function postPattern(array $phpInput): void
     {
         $query = (new QueryBuilder())
             ->insert($this->tableName)
@@ -49,14 +49,14 @@ class WordModel
         $this->db->executeWithoutResult($query);
     }
 
-    public function deleteAllWords()
+    public function deleteAllPatterns(): void
     {
         $query = (new QueryBuilder())
             ->delete($this->tableName);
         $this->db->executeWithoutResult($query);
     }
 
-    public function deleteWordByID(string $id)
+    public function deletePatternsByID(string $id): void
     {
         $query = (new QueryBuilder())
             ->delete($this->tableName)
@@ -64,13 +64,15 @@ class WordModel
         $this->db->executeWithoutResult($query);
     }
 
-    public function updateWordByID(string $id, array $phpInput)
+    public function updatePatternsByID(string $id, array $phpInput)
     {
-        $query = (new QueryBuilder())
-            ->update($this->tableName)
-            ->set($phpInput)
-            ->where(["id = $id"]);
-        echo $query;
-        $this->db->executeWithoutResult($query);
+        {
+            $query = (new QueryBuilder())
+                ->update($this->tableName)
+                ->set($phpInput)
+                ->where(["id = $id"]);
+            echo $query;
+            $this->db->executeWithoutResult($query);
+        }
     }
 }
