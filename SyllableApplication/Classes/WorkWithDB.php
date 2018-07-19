@@ -4,16 +4,15 @@ namespace SyllableApplication\Classes;
 
 use SplFileObject;
 use Database\Database;
-use PDO;
 
 class WorkWithDB
 {
     private $patterns;
-    private $db;
+    private $dataBase;
 
     public function __construct()
     {
-        $this->db = new Database();
+        $this->dataBase = new Database();
     }
 
     public function message()
@@ -30,13 +29,13 @@ class WorkWithDB
         echo "Enter choice:............\n";
     }
 
-    public function executeDBMode()
+    public function executeDBMode(): void
     {
         $this->message();
-        $this->getOptionInput();
+        $this->optionInput();
     }
 
-    public function getOptionInput()
+    public function optionInput(): void
     {
         $action = trim(fgets(STDIN));
         switch ($action) {
@@ -51,11 +50,11 @@ class WorkWithDB
                 break;
             default:
                 echo "Wrong input.";
-                die;  //  error exception handler
+                die();  //  error exception handler
         }
     }
 
-    public function updateDB()
+    public function updateDB(): void
     {
         $file = new SplFileObject(FILENAME);
         while (!$file->eof()) {
@@ -69,8 +68,8 @@ class WorkWithDB
         $db->delete("words");
 
         foreach ($this->patterns as $pattern) {
-            $pattern = trim(pattern);
-            $db->insert("patterns", $values = [
+            $pattern = trim($pattern);
+            $db->insert("patterns", [
                 "pattern" => $pattern
             ]);
         }
@@ -82,8 +81,8 @@ class WorkWithDB
     {
         $InputHand = new InputHand;
         $wordList = $InputHand->inputConsole();
-        $this->db->beginTransaction();
-        $patternsDB = $this->db->select("patterns");
+        $this->dataBase->beginTransaction();
+        $patternsDB = $this->dataBase->select("patterns");
 //        $patternsDB = $patternsObjFromDB->fetchAll(PDO::FETCH_ASSOC);
         foreach ($patternsDB as $entry) {
             $patterns[] = $entry["pattern"];
@@ -100,16 +99,16 @@ class WorkWithDB
                     $usedPatterns = $objWord->findMatch($patterns);
                     // add insert into connections
 
-                    $this->db->insert("words", $values = [
+                    $this->dataBase->insert("words", $values = [
                         "word" => $word,
                         "word_finished" => $wordSyllabled
                     ]);
-                    $insertedWordID = $this->db->lastInsertId();
+                    $insertedWordID = $this->dataBase->lastInsertId();
                     var_dump($usedPatterns); // fix this later
                     foreach ($usedPatterns as $entry) {
                         $key = array_search($entry, $patterns);
                         $key = $patternsID[$key];
-                        $this->db->insert("word_patterns", $values = [
+                        $this->dataBase->insert("word_patterns", $values = [
                             "word_id" => $insertedWordID,
                             "syllable_id" => $key
                         ]);
@@ -119,7 +118,7 @@ class WorkWithDB
         } else {
             // error handler
         }
-        $this->db->endTransaction();
+        $this->dataBase->endTransaction();
     }
 
     public function checkDoneWords()

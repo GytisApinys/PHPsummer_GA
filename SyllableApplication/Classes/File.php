@@ -1,40 +1,36 @@
-<?php 
+<?php
+
 namespace SyllableApplication\Classes;
 
 use SplFileObject;
 
 class File
 {
-    public function execute()
+    public function execute(): void
     {
         $this->welcomeMessage();
-        $task = $this->sourceOption();
-        // $task = $this->getInput();
-        // $finalInput = $this->modifyInput($task, $patterns);
-        // // return $finalInput;
+        $this->sourceOption();
     }
-    public function sourceOption()
+
+    public function sourceOption(): void
     {
-         $action = trim(fgets(STDIN));
+        $action = trim(fgets(STDIN));
         switch ($action) {
             case 1:
-                $usingDB = new WorkWithDB;
-                $input = $usingDB->executeDBMode();
-                return $input;
+                $usingDB = new WorkWithDB();
+                $usingDB->executeDBMode();
                 break;
             case 2:
-                $usingFile = new WorkWithFile;
-                $input = $usingFile->executeFileMode();
-                return $input;
+                $usingFile = new WorkWithFile();
+                $usingFile->executeFileMode();
                 break;
             default:
                 echo "Wrong input.";
-                die;  //  error expection handler
-         }
-        $word = trim(fgets(STDIN));
-        return $word;
+                die();  //  error expection handler
+        }
     }
-    public function welcomeMessage()
+
+    public function welcomeMessage(): void
     {
         echo "\n|---------Word Syllabizer---------|\n";
         echo "|                                 |\n";
@@ -46,84 +42,83 @@ class File
         echo "|---------------------------------|\n";
         echo "Enter choice: ";
     }
-    public static function readData($filename)
+
+    public static function readData($filename): array
     {
+        $patterns = [];
         $file = new SplFileObject($filename);
         while (!$file->eof()) {
-        $patterns[] = $file->fgets();
+            $patterns[] = $file->fgets();
         }
         return $patterns;
     }
-    public function resultDisplay($formated_word)
+
+    public function resultDisplay($formattedWord): void
     {
         echo "\nHow would you want to get result?\n";
         echo "[1] - File\n";
         echo "[2] - Console\n";
         $action = trim(fgets(STDIN));
-        $End = FALSE;
-        while ($End == false) {
+        $end = false;
+        while ($end == false) {
             switch ($action) {
-            case 1:
-                $InputFile = new InputFile;
-                $input = $InputFile->outputConsole($formated_word);
-                $End = true;
-                break;
-            case 2:
-                $InputHand = new InputHand;
-                $input = $InputHand->outputConsole($formated_word);
-                $End = true;
-                break;
-            default:
-                echo "Wrong input. Try again.";
+                case 1:
+                    $inputFile = new InputFile();
+                    $inputFile->outputConsole($formattedWord);
+                    $end = true;
+                    break;
+                case 2:
+                    $inputHand = new InputHand();
+                    $inputHand->outputConsole($formattedWord);
+                    $end = true;
+                    break;
+                default:
+                    echo "Wrong input. Try again.";
             }
         }
     }
-    public function getInput()
+
+    public function getInput(): array
     {
 
         $action = trim(fgets(STDIN));
         switch ($action) {
             case 1:
-                $InputFile = new InputFile;
-                $input = $InputFile->inputConsole();
+                $inputFile = new InputFile();
+                $input = $inputFile->inputConsole();
                 return $input;
                 break;
             case 2:
-                $InputHand = new InputHand;
-                $input = $InputHand->inputConsole();
+                $inputHand = new InputHand();
+                $input = $inputHand->inputConsole();
                 return $input;
                 break;
             default:
                 echo "Wrong input.";
                 die;  //  error expection handler
-         }
-        $word = trim(fgets(STDIN));
-        return $word;
+        }
     }
-    public function modifyInput($wordList, $patterns)
+
+    public function modifyInput($wordList, $patterns): array
     {
         $objTimer = new Timer();
         $objTimer->start();
-        $FinalResult = '';
+        $finalResult = '';
         if (is_array($wordList)) {
             foreach ($wordList as $word) {
-                if (preg_match("/[\w]/",$word) != NULL) {
+                if (preg_match("/[\w]/", $word) != null) {
                     $objWord = new Word($word);
-                    $word_syllabled = $objWord->modifyWord($patterns);
-                    $word = $word_syllabled;
+                    $wordSyllable = $objWord->modifyWord($patterns);
+                    $word = $wordSyllable;
                 }
-                $FinalResult .= $word;
+                $finalResult .= $word;
             }
-        } else {
-            // error handler
         }
         $objTimer->stop();
         $timeDuration = $objTimer->duration();
-         return [
+        return [
             'time' => $timeDuration,
-            'result' => $FinalResult,
+            'result' => $finalResult,
         ];
     }
 }
-
-
