@@ -22,7 +22,7 @@ class WordController implements ControllerInterface
         $this->wordModel = $wordModel;
     }
 
-    public function get(array $phpInput): void
+    public function get(): void
     {
         if (count($this->urlActionString) == 1) {
             $output = $this->wordModel->getAllWords();
@@ -44,7 +44,7 @@ class WordController implements ControllerInterface
         }
     }
 
-    public function delete(array $phpInput): void
+    public function delete(): void
     {
         if (count($this->urlActionString) == 1) {
             $this->wordModel->deleteAllWords();

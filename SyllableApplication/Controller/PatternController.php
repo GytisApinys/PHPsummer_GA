@@ -20,9 +20,13 @@ class PatternController implements ControllerInterface
     {
         $this->patternModel = new PatternsModel();
         $this->urlActionString = $urlString;
+        $this->urlActionString = $urlString;
+        $this->urlActionString = $urlString;
+        $this->urlActionString = $urlString;
+        $this->urlActionString = $urlString;
     }
 
-    public function get(array $phpInput): void
+    public function get(): void
     {
         if (count($this->urlActionString) == 1) {
             $this->patternModel->getAllPatterns();
@@ -42,7 +46,7 @@ class PatternController implements ControllerInterface
         }
     }
 
-    public function delete(array $phpInput): void
+    public function delete(): void
     {
         if (count($this->urlActionString) == 1) {
             $this->patternModel->deleteAllPatterns();

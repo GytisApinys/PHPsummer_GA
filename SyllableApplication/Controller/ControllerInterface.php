@@ -5,8 +5,8 @@ namespace Controller;
 
 interface ControllerInterface
 {
-    public function get(array $phpInput): void;
+    public function get(): void;
     public function post(array $phpInput): void;
-    public function delete(array $phpInput): void;
+    public function delete(): void;
     public function put(array $phpInput): void;
 }

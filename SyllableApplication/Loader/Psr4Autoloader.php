@@ -107,7 +107,6 @@ class Psr4Autoloader
     {
         // the current namespace prefix
         $prefix = $class;
-
         // work backwards through the namespace names of the fully-qualified
         // class name to find a mapped file name
         while (false !== $pos = strrpos($prefix, '\\')) {

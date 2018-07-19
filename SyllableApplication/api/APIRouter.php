@@ -20,7 +20,7 @@ class APIRouter //
     public function __construct(string $apiURL)
     {
         $this->entrylist = explode('/', $apiURL);
-        $this->execute();
+
     }
 
     public function directions()
@@ -37,21 +37,26 @@ class APIRouter //
             default:
                 echo "Wrong input.";
         }
-
     }
 
-    public function execute()
+    public function execute(string $apiMethod)
     {
         $phpInput = json_decode(file_get_contents("php://input"), true);
-        if ($phpInput == NULL) $phpInput = [];
+        if ($phpInput == null) {
+            $phpInput = [];
+        }
         $controllerName = $this->directions();
         $modelName = 'Model\\' . $controllerName . "Model";
         $controllerName = 'Controller\\' . $controllerName . "Controller";
-        $methodName = strtolower($_SERVER['REQUEST_METHOD']);
+        $methodName = strtolower($apiMethod);
         try {
             $modelObj = new $modelName();
             $controllerExecute = new $controllerName($this->entrylist, $modelObj);
-            $controllerExecute->$methodName($phpInput);
+            if ($apiMethod == 'POST' && $apiMethod == 'PUT') {
+                $controllerExecute->$methodName($phpInput);
+            } else {
+                $controllerExecute->$methodName($phpInput);
+            }
         } catch (\Exception  $e) {
             echo "Error" . $e->getMessage();
         }
