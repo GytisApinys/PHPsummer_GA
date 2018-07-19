@@ -312,3 +312,8 @@
 [2018 Jul 19 5:57:22]INFO: Program starting.
 [2018 Jul 19 5:57:32]INFO: Program starting.
 [2018 Jul 19 5:57:36]INFO: Program starting.
+[2018 Jul 19 6:40:51]INFO: Program starting.
+[2018 Jul 19 6:40:53]INFO: Program starting.
+[2018 Jul 19 6:41:11]INFO: Program starting.
+[2018 Jul 19 6:41:24]DEBUG: Algorithm took 0.38002705574036 seconds to exe.
+[2018 Jul 19 6:41:41]INFO: Program starting.
