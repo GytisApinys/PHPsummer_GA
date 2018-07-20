@@ -13,43 +13,21 @@ class WorkWithFile
 
     public function __construct()
     {
-
         $file = new SplFileObject(FILENAME);
         while (!$file->eof()) {
             $this->patterns[] = $file->fgets();
         }
-
-        // var_dump($this->patterns);
-        // die;
     }
 
     public function executeFileMode()
     {
-        $this->message();
+        ConsoleMsgOutput::workFileMsg();
         $input = $this->getInput();
-        // var_dump($this->patterns);
-        // die;
         $finalInput = $this->modifyInput($input);
         $this->resultDisplay($finalInput['result']);
         $executionTime = $finalInput['time'];
         echo "\nProcessing word took " . $executionTime . "sec";
         FileLogger::debug("Algorithm took $executionTime seconds to exe.");
-
-
-    }
-
-    public function message()
-    {
-        echo "\n";
-        echo "|------------------------|\n";
-        echo "|     Work with File     |\n";
-        echo "|                        |\n";
-        echo "|     Get words from :   |\n";
-        echo "|     [1] File           |\n";
-        echo "|     [1] Console        |\n";
-        echo "|________________________|\n";
-        echo "Enter choice:............\n";
-
     }
 
     public function getInput()
@@ -58,67 +36,63 @@ class WorkWithFile
         $action = trim(fgets(STDIN));
         switch ($action) {
             case 1:
-                $InputFile = new InputFile;
-                $input = $InputFile->inputConsole();
+                $inputFile = new InputFile();
+                $input = $inputFile->inputConsole();
                 return $input;
                 break;
             case 2:
-                $InputHand = new InputHand;
-                $input = $InputHand->inputConsole();
+                $inputHand = new InputHand();
+                $input = $inputHand->inputConsole();
                 return $input;
                 break;
             default:
                 echo "Wrong input.";
-                die;  //  error expection handler
+                return null;
         }
-        $word = trim(fgets(STDIN));
-        return $word;
     }
 
     public function modifyInput($wordList)
     {
         $objTimer = new Timer();
         $objTimer->start();
-        $FinalResult = '';
+        $finalResult = '';
         if (is_array($wordList)) {
             foreach ($wordList as $word) {
-                if (preg_match("/[\w]/", $word) != NULL) {
+                if (preg_match("/[\w]/", $word) != null) {
                     $objWord = new Word($word);
-                    $word_syllabled = $objWord->modifyWord($this->patterns);
-                    $word = $word_syllabled;
+                    $wordSyllable = $objWord->modifyWord($this->patterns);
+                    $word = $wordSyllable;
                 }
-                $FinalResult .= $word;
+                $finalResult .= $word;
             }
-        } else {
-            // error handler
         }
         $objTimer->stop();
         $timeDuration = $objTimer->duration();
         return [
             'time' => $timeDuration,
-            'result' => $FinalResult,
+            'result' => $finalResult,
         ];
     }
 
-    public function resultDisplay($formated_word)
+    public function resultDisplay($formatedWord)
     {
         echo "\nHow would you want to get result?\n";
         echo "[1] - File\n";
         echo "[2] - Console\n";
 
-        $End = FALSE;
-        while ($End == false) {
+        $end = false;
+        while ($end == false) {
             $action = trim(fgets(STDIN));
             switch ($action) {
                 case 1:
-                    $InputFile = new InputFile;
-                    $input = $InputFile->outputConsole($formated_word);
-                    $End = true;
+                    $inputFile = new InputFile();
+                    $inputFile->outputConsole($formatedWord);
+                    $end = true;
                     break;
                 case 2:
-                    $InputHand = new InputHand;
-                    $input = $InputHand->outputConsole($formated_word);
-                    $End = true;
+                    $inputHand = new InputHand();
+                    $inputHand->outputConsole($formatedWord);
+                    $end = true;
                     break;
                 default:
                     echo "Wrong input. Try again.";

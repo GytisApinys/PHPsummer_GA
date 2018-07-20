@@ -10,14 +10,14 @@ class InputFile implements WriteConsole
         $filename = trim(fgets(STDIN));
         $filename = __DIR__ . "\\..\\Data\\" . $filename . ".txt";
 
-        if (file_exists($filename)) {
+        try {
             $words = file_get_contents($filename);
             $wordListDivided = preg_split('/\b/', $words);
             return $wordListDivided;
-        } else {
-            echo "File does not exist.";
-            die;//  error exception handler
+        } catch (\Exception $e) {
+            echo "File does not exist." . $e->getMessage();
         }
+        return null;
     }
 
     public function outputConsole($message): void

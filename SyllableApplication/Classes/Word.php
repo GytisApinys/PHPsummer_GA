@@ -42,7 +42,7 @@ class Word
             }
         }
         if (empty($foundPatterns)) {
-            $foundPatterns = null;
+            $foundPatterns = [];
         }
         return $foundPatterns;
     }

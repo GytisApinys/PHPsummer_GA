@@ -7,7 +7,7 @@ require_once __DIR__ . "./Loader/Psr4Autoloader.php";
 use Api\APIRouter;
 use Log\FileLogger;
 use AutoLoader\Psr4Autoloader;
-use SyllableApplication\Classes\File;
+use SyllableApplication\Classes\ApplicationController;
 
 define("FILENAME", __DIR__ . "\Data\Patterns.txt");
 
@@ -27,7 +27,7 @@ if (isset($_SERVER['REQUEST_METHOD'])) {
     $router->execute($_SERVER['REQUEST_METHOD']);
 
 } elseif (empty($_SERVER['REQUEST_METHOD'])) {
-    $objFile = new File();
+    $objFile = new ApplicationController();
     $objFile->execute();
 }
 

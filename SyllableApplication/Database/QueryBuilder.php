@@ -20,12 +20,12 @@ class QueryBuilder
     {
     }
 
-    public function select(array $atributes = []): QueryBuilder
+    public function select(array $attributes = []): QueryBuilder
     {
-        if ($atributes == []) {
+        if ($attributes == []) {
             $this->action = "SELECT * ";
         } else {
-            $this->action = "SELECT " . implode(", ", $atributes);
+            $this->action = "SELECT " . implode(", ", $attributes);
         }
         return $this;
     }
@@ -70,7 +70,9 @@ class QueryBuilder
         $this->values = "(" . implode(", ", array_keys($valuesByKey[0])) . ") VALUES ";
         foreach ($valuesByKey as $key => $value) {
             $this->values .= "('" . implode("', '", $value) . "')";
-            if ($key != (count($valuesByKey) - 1)) $this->values .= ", ";
+            if ($key != (count($valuesByKey) - 1)) {
+                $this->values .= ", ";
+            }
         }
         return $this;
     }
@@ -91,5 +93,4 @@ class QueryBuilder
     {
         return $this->action . " " . $this->from . " " . $this->values . " " . $this->where;
     }
-
 }

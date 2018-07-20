@@ -15,23 +15,9 @@ class WorkWithDB
         $this->dataBase = new Database();
     }
 
-    public function message()
-    {
-        echo "\n";
-        echo "|------------------------|\n";
-        echo "|     Work with DB       |\n";
-        echo "|     What to do?        |\n";
-        echo "|   [1] Update DB        |\n";
-        echo "|   [2] Write in         |\n";
-        echo "|       Console          |\n";
-        echo "|   [3] Check done words |\n";
-        echo "|________________________|\n";
-        echo "Enter choice:............\n";
-    }
-
     public function executeDBMode(): void
     {
-        $this->message();
+        ConsoleMsgOutput::workBbMsg();
         $this->optionInput();
     }
 
@@ -50,7 +36,6 @@ class WorkWithDB
                 break;
             default:
                 echo "Wrong input.";
-                die();  //  error exception handler
         }
     }
 
@@ -77,31 +62,28 @@ class WorkWithDB
         $db->endTransaction();
     }
 
-    public function addWord()
+    public function addWord(): void
     {
-        $InputHand = new InputHand;
-        $wordList = $InputHand->inputConsole();
+        $patterns = [];
+        $patternsID = [];
+        $inputHand = new InputHand();
+        $wordList = $inputHand->inputConsole();
         $this->dataBase->beginTransaction();
         $patternsDB = $this->dataBase->select("patterns");
-//        $patternsDB = $patternsObjFromDB->fetchAll(PDO::FETCH_ASSOC);
         foreach ($patternsDB as $entry) {
             $patterns[] = $entry["pattern"];
             $patternsID[] = $entry["id"];
         }
-//        $key = array_search(".ant4", $patterns);
-//        $key = $patternsID[$key];
-//        var_dump($key);
         if (is_array($wordList)) {
             foreach ($wordList as $word) {
-                if (preg_match("/[\w]/", $word) != NULL) {
+                if (preg_match("/[\w]/", $word) != null) {
                     $objWord = new Word($word);
-                    $wordSyllabled = $objWord->modifyWord($patterns);
+                    $wordSyllable = $objWord->modifyWord($patterns);
                     $usedPatterns = $objWord->findMatch($patterns);
-                    // add insert into connections
 
                     $this->dataBase->insert("words", $values = [
                         "word" => $word,
-                        "word_finished" => $wordSyllabled
+                        "word_finished" => $wordSyllable
                     ]);
                     $insertedWordID = $this->dataBase->lastInsertId();
                     var_dump($usedPatterns); // fix this later
@@ -115,14 +97,12 @@ class WorkWithDB
                     }
                 }
             }
-        } else {
-            // error handler
         }
         $this->dataBase->endTransaction();
     }
 
-    public function checkDoneWords()
+    public function checkDoneWords(): void
     {
-
+        //
     }
 }

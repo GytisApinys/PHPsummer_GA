@@ -1,59 +1,57 @@
 <?php
+
 namespace Database;
 
 use PDO;
 
-class Database 
+class Database
 {
-    private $database;
-    
+    private $db;
+
 
     public function __construct()
     {
-        $this->database = new PDO('mysql:host=localhost', 'root','Gytukas123');
-        if (!$this->database) {
+        $this->db = new PDO('mysql:host=localhost', 'root', 'Gytukas123');
+        if (!$this->db) {
             die("Connection failed: " . mysqli_connect_error());
         }
-        $this->database->exec('USE syllable_application');
+        $this->db->exec('USE syllable_application');
     }
-    public function beginTransaction()
-    {
-        $this->database->beginTransaction();
-    }
-    public function endTransaction()
-    {
-        $this->database->commit();
-    }
-    public function rollbackTransaction()
-    {
-        $this->database->rollback();
-    }
-    //////
-    # $db = new Database();
-    # $db->insert("try",$one = [
-    #  "name" => "Gytis",
-    #  "surname" => "Apinys"]);
-    /////
 
-    public function insert(string $tableName, array $values) //??
+    public function beginTransaction(): void
     {
-        $atributes = implode(", ", array_keys($values));
+        $this->db->beginTransaction();
+    }
+
+    public function endTransaction(): void
+    {
+        $this->db->commit();
+    }
+
+    public function rollbackTransaction(): void
+    {
+        $this->db->rollback();
+    }
+
+    public function insert(string $tableName, array $values): void
+    {
+        $attributes = implode(", ", array_keys($values));
         $valueString = implode(", :", array_keys($values));
-        
-        $query = "INSERT INTO ". $tableName ."(".$atributes.") VALUES(:".$valueString.")";
-        
+
+        $query = "INSERT INTO " . $tableName . "(" . $attributes . ") VALUES(:" . $valueString . ")";
+
         $keysArray = array_keys($values);
         $valuesArray = array_values($values);
-        $command = $this->database->prepare($query);
+        $command = $this->db->prepare($query);
         for ($i = 0; $i < count($values); $i++) {
-            $command->bindParam(":".$keysArray[$i], $valuesArray[$i]);
+            $command->bindParam(":" . $keysArray[$i], $valuesArray[$i]);
         }
         $command->execute();
     }
 
     public function delete(string $tableName, array $values = [])
     {
-        $query = "DELETE FROM ". $tableName; 
+        $query = "DELETE FROM " . $tableName;
         if (!empty($values)) {
             $query .= " WHERE ";
 
@@ -61,26 +59,25 @@ class Database
             $valuesArray = array_values($values);
 
             for ($i = 0; $i < count($values); $i++) {
-                $query .= $keysArray[$i] . " = :" . $keysArray[$i] ." AND ";
+                $query .= $keysArray[$i] . " = :" . $keysArray[$i] . " AND ";
             }
             $query = substr($query, 0, -5);
 
-            $command = $this->database->prepare($query);
-            
-            for ($i = 0; $i < count($values); $i++)
-            {
-                $command->bindParam(":".$keysArray[$i], $valuesArray[$i]);
+            $command = $this->db->prepare($query);
+
+            for ($i = 0; $i < count($values); $i++) {
+                $command->bindParam(":" . $keysArray[$i], $valuesArray[$i]);
             }
-            
-        }else {
-            $command = $this->database->prepare($query);
+
+        } else {
+            $command = $this->db->prepare($query);
         }
         $command->execute();
     }
-    public function select(string $tableName, array $values = []) // if array is empty no need of table
+
+    public function select(string $tableName, array $values = []): array
     {
-        // SELECT * FROM `try` WHERE www = "test" and id = "1"
-        $query = "SELECT * FROM ". $tableName;
+        $query = "SELECT * FROM " . $tableName;
         if (!empty($values)) {
             $query .= " WHERE ";
 
@@ -88,17 +85,16 @@ class Database
             $valuesArray = array_values($values);
 
             for ($i = 0; $i < count($values); $i++) {
-                $query .= $keysArray[$i] . " = :" . $keysArray[$i] ." AND ";
+                $query .= $keysArray[$i] . " = :" . $keysArray[$i] . " AND ";
             }
             $query = substr($query, 0, -5);
-           
-            $command = $this->database->prepare($query);
-            for ($i = 0; $i < count($values); $i++)
-            {
-                $command->bindParam(":".$keysArray[$i], $valuesArray[$i]);
+
+            $command = $this->db->prepare($query);
+            for ($i = 0; $i < count($values); $i++) {
+                $command->bindParam(":" . $keysArray[$i], $valuesArray[$i]);
             }
-        }else {
-            $command = $this->database->prepare($query);
+        } else {
+            $command = $this->db->prepare($query);
         }
         $command->execute();
 
@@ -107,27 +103,24 @@ class Database
 
         return $dbArray;
     }
-    public function update()
+
+    public function lastInsertId(): int
     {
-        //
-    }
-    public function lastInsertId()
-    {
-        $lastUsedID = $this->database->lastInsertId();
+        $lastUsedID = $this->db->lastInsertId();
         return $lastUsedID;
     }
+
     public function executeWithResult(string $query): array
     {
-        $command = $this->database->prepare($query);
+        $command = $this->db->prepare($query);
         $command->execute();
         $dbArray = $command->fetchAll(PDO::FETCH_ASSOC);
         return $dbArray;
-
     }
+
     public function executeWithoutResult(string $query): void
     {
-        $command = $this->database->prepare($query);
+        $command = $this->db->prepare($query);
         $command->execute();
     }
-
 }

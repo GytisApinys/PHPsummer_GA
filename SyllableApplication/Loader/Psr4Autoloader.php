@@ -1,4 +1,5 @@
 <?php
+
 namespace AutoLoader;
 /**
  * An example of a general-purpose implementation that includes the optional
@@ -110,17 +111,16 @@ class Psr4Autoloader
         // work backwards through the namespace names of the fully-qualified
         // class name to find a mapped file name
         while (false !== $pos = strrpos($prefix, '\\')) {
-
             // retain the trailing namespace separator in the prefix
             $prefix = substr($class, 0, $pos + 1);
 
             // the rest is the relative class name
-            $relative_class = substr($class, $pos + 1);
+            $relativeClass = substr($class, $pos + 1);
 
             // try to load a mapped file for the prefix and relative class
-            $mapped_file = $this->loadMappedFile($prefix, $relative_class);
-            if ($mapped_file) {
-                return $mapped_file;
+            $mappedFile = $this->loadMappedFile($prefix, $relativeClass);
+            if ($mappedFile) {
+                return $mappedFile;
             }
 
             // remove the trailing namespace separator for the next iteration
@@ -136,11 +136,11 @@ class Psr4Autoloader
      * Load the mapped file for a namespace prefix and relative class.
      *
      * @param string $prefix The namespace prefix.
-     * @param string $relative_class The relative class name.
+     * @param string $relativeClass The relative class name.
      * @return mixed Boolean false if no mapped file can be loaded, or the
      * name of the mapped file that was loaded.
      */
-    protected function loadMappedFile($prefix, $relative_class)
+    protected function loadMappedFile($prefix, $relativeClass)
     {
         // are there any base directories for this namespace prefix?
         if (isset($this->prefixes[$prefix]) === false) {
@@ -148,14 +148,13 @@ class Psr4Autoloader
         }
 
         // look through base directories for this namespace prefix
-        foreach ($this->prefixes[$prefix] as $base_dir) {
-
+        foreach ($this->prefixes[$prefix] as $baseDir) {
             // replace the namespace prefix with the base directory,
             // replace namespace separators with directory separators
             // in the relative class name, append with .php
-            $file = $base_dir
-                  . str_replace('\\', '/', $relative_class)
-                  . '.php';
+            $file = $baseDir
+                . str_replace('\\', '/', $relativeClass)
+                . '.php';
 
             // if the mapped file exists, require it
             if ($this->requireFile($file)) {

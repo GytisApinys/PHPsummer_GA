@@ -4,11 +4,11 @@ namespace SyllableApplication\Classes;
 
 use SplFileObject;
 
-class File
+class ApplicationController
 {
     public function execute(): void
     {
-        $this->welcomeMessage();
+        ConsoleMsgOutput::workTypeMsg();
         $this->sourceOption();
     }
 
@@ -26,21 +26,8 @@ class File
                 break;
             default:
                 echo "Wrong input.";
-                die();  //  error expection handler
+                die();
         }
-    }
-
-    public function welcomeMessage(): void
-    {
-        echo "\n|---------Word Syllabizer---------|\n";
-        echo "|                                 |\n";
-        echo "|    Would you like to work       |\n";
-        echo "|    with Database or file?       |\n";
-        echo "|                                 |\n";
-        echo "|   [1] - Database                |\n";
-        echo "|   [2] - File                    |\n";
-        echo "|---------------------------------|\n";
-        echo "Enter choice: ";
     }
 
     public static function readData($filename): array
@@ -95,7 +82,7 @@ class File
                 break;
             default:
                 echo "Wrong input.";
-                die;  //  error expection handler
+                return null;
         }
     }
 
