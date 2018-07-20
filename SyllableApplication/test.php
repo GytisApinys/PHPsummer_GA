@@ -22,6 +22,14 @@ $wordsFromDB[] = [
 $wordsFromDB[] = [
     "word2" => "w-ord2"
 ];
-$keys = array_keys($wordsFromDB);
-$values = array_values($wordsFromDB);
+//$keys = array_keys($wordsFromDB);
+//$values = array_values($wordsFromDB);
 //var_dump($wordsFromDB);
+
+$word = "word";
+
+foreach ($wordsFromDB[0] as $keys => $value) {
+    if ($keys == $word) {
+        echo $value;
+    }
+}

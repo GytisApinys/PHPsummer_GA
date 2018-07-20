@@ -30,6 +30,3 @@ if (isset($_SERVER['REQUEST_METHOD'])) {
     $objFile = new ApplicationController();
     $objFile->execute();
 }
-
-
-
