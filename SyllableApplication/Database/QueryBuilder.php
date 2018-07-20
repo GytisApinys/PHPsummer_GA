@@ -80,7 +80,7 @@ class QueryBuilder
     public function set(array $valuesByKey): QueryBuilder
     {
         $temp = []; // rename temp
-        foreach ($valuesByKey as $key => $value) {
+        foreach ($valuesByKey[0] as $key => $value) {
             $temp[] = "$key='$value'";
         }
         $this->values = " SET " . implode(", ", $temp);
