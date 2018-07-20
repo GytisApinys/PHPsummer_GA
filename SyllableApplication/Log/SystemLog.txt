@@ -337,3 +337,32 @@
 [2018 Jul 19 6:53:43]INFO: Program starting.
 [2018 Jul 19 6:53:45]INFO: Program starting.
 [2018 Jul 19 6:53:47]INFO: Program starting.
+[2018 Jul 19 23:55:42]INFO: Program starting.
+[2018 Jul 19 23:56:28]INFO: Program starting.
+[2018 Jul 19 23:56:43]DEBUG: Algorithm took 0 seconds to exe.
+[2018 Jul 20 0:27:04]INFO: Program starting.  Array
+[2018 Jul 20 0:29:14]INFO: Program starting.  Array
+[2018 Jul 20 0:29:22]INFO: Program starting.  Array
+[2018 Jul 20 0:29:54]INFO: Program starting.  Array
+[2018 Jul 20 0:30:56]INFO: Program starting.  Array
+[2018 Jul 20 0:31:54]INFO: Program starting.
+[2018 Jul 20 0:32:03]INFO: Program starting.
+[2018 Jul 20 0:32:51]INFO: Program starting.
+[2018 Jul 20 0:32:57]DEBUG: Algorithm took 0 seconds to exe.
+[2018 Jul 20 0:32:59]INFO: Program starting.
+[2018 Jul 20 0:34:34]INFO: Program starting.
+[2018 Jul 20 0:34:41]DEBUG: Algorithm took 0 seconds to exe.
+[2018 Jul 20 0:34:43]INFO: Program starting.
+[2018 Jul 20 0:35:02]DEBUG: Algorithm took 0 seconds to exe.
+[2018 Jul 20 0:35:06]INFO: Program starting.
+[2018 Jul 20 0:35:15]DEBUG: Algorithm took 0 seconds to exe.
+[2018 Jul 20 0:35:37]INFO: Program starting.
+[2018 Jul 20 0:35:58]DEBUG: Algorithm took 0 seconds to exe.
+[2018 Jul 20 0:36:41]INFO: Program starting.
+[2018 Jul 20 0:36:57]DEBUG: Algorithm took 1 seconds to exe.
+[2018 Jul 20 0:37:02]INFO: Program starting.
+[2018 Jul 20 0:37:20]DEBUG: Algorithm took 0 seconds to exe.
+[2018 Jul 20 0:37:23]INFO: Program starting.
+[2018 Jul 20 0:38:06]DEBUG: Algorithm took 27 seconds to exe.
+[2018 Jul 20 0:39:39]INFO: Program starting.
+[2018 Jul 20 0:54:10]INFO: Program starting.

@@ -66,6 +66,8 @@ class WorkWithDB
     {
         $patterns = [];
         $patternsID = [];
+//        $wordsFromDB = [];
+//        $wordsFinishedFromDB = [];
         $inputHand = new InputHand();
         $wordList = $inputHand->inputConsole();
         $this->dataBase->beginTransaction();
@@ -74,9 +76,23 @@ class WorkWithDB
             $patterns[] = $entry["pattern"];
             $patternsID[] = $entry["id"];
         }
+//
+//
+//        $wordsDB = $this->dataBase->select("words");
+//        foreach ($wordsDB as $entry) {
+//            $wordsFromDB[] = [
+//                $entry["word"] => $entry["word_finished"]
+//            ];
+//            $wordsFromDB[] = ;
+//            $wordsFinishedFromDB[] = ;
+//        }
+//
+//
+
         if (is_array($wordList)) {
             foreach ($wordList as $word) {
                 if (preg_match("/[\w]/", $word) != null) {
+//                    if()
                     $objWord = new Word($word);
                     $wordSyllable = $objWord->modifyWord($patterns);
                     $usedPatterns = $objWord->findMatch($patterns);

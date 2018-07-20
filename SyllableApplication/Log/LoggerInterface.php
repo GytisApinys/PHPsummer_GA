@@ -96,5 +96,5 @@ interface LoggerInterface
      * @param array $context
      * @return void
      */
-    public static function log($level, $message, array $context = array());
+    public static function log($level, $message);
 }
