@@ -1,6 +1,6 @@
 <?php
 
-namespace SyllableApplication\Classes;
+namespace SyllableApplication\Methods;
 
 use SplFileObject;
 use Database\Database;
@@ -20,6 +20,10 @@ class WorkWithDB
         ConsoleMsgOutput::workBbMsg();
         $this->optionInput();
     }
+//    public function dbInit()
+//    {
+//        $this->dataBase = new Database();
+//    }
 
     public function optionInput(): void
     {
@@ -69,32 +73,30 @@ class WorkWithDB
         $inputHand = new InputHand();
         $wordList = $inputHand->inputConsole();
         $this->dataBase->beginTransaction();
-        $patternsDB = $this->dataBase->select("patterns");
+        $patternsDB = $this->dataBase->select("patterns"); //patternsList/Rows
         foreach ($patternsDB as $entry) {
             $patterns[] = $entry["pattern"];
             $patternsID[] = $entry["id"];
         }
 
-        if (is_array($wordList)) {
-            foreach ($wordList as $word) {
-                if (preg_match("/[\w]/", $word) != null) {
-                    $objWord = new Word($word);
-                    $wordSyllable = $objWord->modifyWord($patterns);
-                    $usedPatterns = $objWord->findMatch($patterns);
-                    $usedPatterns = array_keys($usedPatterns);
-                    $this->dataBase->insert("words", $values = [
-                        "word" => $word,
-                        "word_finished" => $wordSyllable
+        foreach ($wordList as $word) {
+            if (preg_match("/[\w]/", $word) != null) {
+                $objWord = new Word($word);
+                $wordSyllable = $objWord->modifyWord($patterns);
+                $usedPatterns = $objWord->findMatch($patterns);
+                $usedPatterns = array_keys($usedPatterns);
+                $this->dataBase->insert("words", [
+                    "word" => $word,
+                    "word_finished" => $wordSyllable
+                ]);
+                $insertedWordID = $this->dataBase->lastInsertId();
+                foreach ($usedPatterns as $entry) {
+                    $key = array_search($entry, $patterns);
+                    $key = $patternsID[$key];
+                    $this->dataBase->insert("word_patterns", [
+                        "word_id" => $insertedWordID,
+                        "syllable_id" => $key
                     ]);
-                    $insertedWordID = $this->dataBase->lastInsertId();
-                    foreach ($usedPatterns as $entry) {
-                        $key = array_search($entry, $patterns);
-                        $key = $patternsID[$key];
-                        $this->dataBase->insert("word_patterns", $values = [
-                            "word_id" => $insertedWordID,
-                            "syllable_id" => $key
-                        ]);
-                    }
                 }
             }
         }

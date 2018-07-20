@@ -47,10 +47,14 @@ class FileLogger implements LoggerInterface
 
     public static function log($level, $message)
     {
-        $logFile = __DIR__ . '\\' . 'SystemLog.txt';
-        $current = file_get_contents($logFile);
-        $current .= "[" . date('Y M d G:i:s') . "]" . strtoupper($level) . ": $message\n";
-        file_put_contents($logFile, $current);
+        $logFile = __DIR__ . '\\' . 'SystemLog.txt'; // i conf
+        $current = sprintf(
+            "[%s] [LEVEL:%s] %s\n",
+            date('Y M d G:i:s'), // i conf
+            strtoupper($level),
+            $message
+        );
+        file_put_contents($logFile, $current, FILE_APPEND);
     }
 }
 

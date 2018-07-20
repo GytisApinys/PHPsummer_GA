@@ -11,19 +11,19 @@ namespace Api;
 
 class APIRouter //
 {
-    private $entrylist;
+    private $entryList;
 
     public function __construct(string $apiURL)
     {
         if (substr($apiURL, -1) == '/') {
             $apiURL = substr($apiURL, 0, -1);
         }
-        $this->entrylist = explode('/', $apiURL);
+        $this->entryList = explode('/', $apiURL);
     }
 
     public function directions()
     {
-        switch ($this->entrylist[0]) {
+        switch ($this->entryList[0]) {
             case "word":
                 $controllerName = "Word";
                 return $controllerName;
@@ -41,18 +41,15 @@ class APIRouter //
     public function execute(string $apiMethod)
     {
         $phpInput = json_decode(file_get_contents("php://input"), true);
-        if ($phpInput == null) {
-            $phpInput = [];
-        }
         $controllerName = $this->directions();
         $modelName = 'Model\\' . $controllerName . "Model";
-        $controllerName = 'Controller\\' . $controllerName . "Controller";
+        $controllerName = 'Controller\\' . $controllerName . "ApiController";// %%change to fully qual
         $methodName = strtolower($apiMethod);
         try {
             $modelObj = new $modelName();
-            $controllerExecute = new $controllerName($this->entrylist, $modelObj);
+            $controllerExecute = new $controllerName($this->entryList, $modelObj);
             if ($apiMethod == 'POST' && $apiMethod == 'PUT') {
-                $controllerExecute->$methodName($phpInput);
+                $controllerExecute->$methodName($phpInput);  // whitelistar  // case
             } else {
                 $controllerExecute->$methodName($phpInput);
             }

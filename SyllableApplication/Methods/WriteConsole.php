@@ -1,6 +1,6 @@
 <?php
 
-namespace SyllableApplication\Classes;
+namespace SyllableApplication\Methods;
 
 interface WriteConsole
 {

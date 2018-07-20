@@ -3,7 +3,7 @@
 namespace Controller;
 
 
-interface ControllerInterface
+interface ApiControllerInterface
 {
     public function get(): void;
     public function post(array $phpInput): void;

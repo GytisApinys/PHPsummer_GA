@@ -11,7 +11,7 @@ namespace Controller;
 
 use Model\PatternModel;
 
-class PatternController implements ControllerInterface
+class PatternApiController implements ApiControllerInterface
 {
     private $urlActionString;
     private $patternModel;

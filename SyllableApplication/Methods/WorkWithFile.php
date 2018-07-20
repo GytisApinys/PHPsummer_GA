@@ -1,6 +1,6 @@
 <?php
 
-namespace SyllableApplication\Classes;
+namespace SyllableApplication\Methods;
 
 use SplFileObject;
 use Log\FileLogger;
@@ -23,11 +23,31 @@ class WorkWithFile
     {
         ConsoleMsgOutput::workFileMsg();
         $input = $this->getInput();
+        $objTimer = new Timer();
+        $objTimer->start();
         $finalInput = $this->modifyInput($input);
-        $this->resultDisplay($finalInput['result']);
-        $executionTime = $finalInput['time'];
-        echo "\nProcessing word took " . $executionTime . "sec";
-        FileLogger::debug("Algorithm took $executionTime seconds to exe.");
+        $objTimer->stop();
+        $timeDuration = $objTimer->duration();
+        $this->resultDisplay($finalInput);
+        echo "\nProcessing word took " . $timeDuration . "sec";
+        FileLogger::debug("Algorithm took $timeDuration seconds to exe.");
+    }
+
+    public function modifyInput($wordList)
+    {
+
+        $finalResult = '';
+        if (is_array($wordList)) {
+            foreach ($wordList as $word) {
+                if (preg_match("/[\w]/", $word) != null) {
+                    $objWord = new Word($word);
+                    $wordSyllable = $objWord->modifyWord($this->patterns);
+                    $word = $wordSyllable;
+                }
+                $finalResult .= $word;
+            }
+        }
+        return $finalResult;
     }
 
     public function getInput()
@@ -51,30 +71,7 @@ class WorkWithFile
         }
     }
 
-    public function modifyInput($wordList)
-    {
-        $objTimer = new Timer();
-        $objTimer->start();
-        $finalResult = '';
-        if (is_array($wordList)) {
-            foreach ($wordList as $word) {
-                if (preg_match("/[\w]/", $word) != null) {
-                    $objWord = new Word($word);
-                    $wordSyllable = $objWord->modifyWord($this->patterns);
-                    $word = $wordSyllable;
-                }
-                $finalResult .= $word;
-            }
-        }
-        $objTimer->stop();
-        $timeDuration = $objTimer->duration();
-        return [
-            'time' => $timeDuration,
-            'result' => $finalResult,
-        ];
-    }
-
-    public function resultDisplay($formatedWord)
+    public function resultDisplay($formattedWord): void
     {
         echo "\nHow would you want to get result?\n";
         echo "[1] - File\n";
@@ -86,12 +83,12 @@ class WorkWithFile
             switch ($action) {
                 case 1:
                     $inputFile = new InputFile();
-                    $inputFile->outputConsole($formatedWord);
+                    $inputFile->outputConsole($formattedWord);
                     $end = true;
                     break;
                 case 2:
                     $inputHand = new InputHand();
-                    $inputHand->outputConsole($formatedWord);
+                    $inputHand->outputConsole($formattedWord);
                     $end = true;
                     break;
                 default:

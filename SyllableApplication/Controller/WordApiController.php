@@ -11,7 +11,7 @@ namespace Controller;
 
 use Model\WordModel;
 
-class WordController implements ControllerInterface
+class WordApiController implements ApiControllerInterface
 {
     private $urlActionString;
     private $wordModel;
@@ -66,5 +66,5 @@ class WordController implements ControllerInterface
             echo "Wrong input\n";
         }
     }
-
+ // count metodas and get specific
 }

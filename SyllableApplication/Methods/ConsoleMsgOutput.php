@@ -6,7 +6,7 @@
  * Time: 10:48 AM
  */
 
-namespace SyllableApplication\Classes;
+namespace SyllableApplication\Methods;
 
 
 class ConsoleMsgOutput

@@ -1,10 +1,10 @@
 <?php
 
-namespace SyllableApplication\Classes;
+namespace SyllableApplication\Methods;
 
 use SplFileObject;
 
-class ApplicationController
+class ApplicationCli // CLIapplication
 {
     public function execute(): void
     {
@@ -14,7 +14,7 @@ class ApplicationController
 
     public function sourceOption(): void
     {
-        $action = trim(fgets(STDIN));
+        $action = trim(fgets(STDIN));  // move to method
         switch ($action) {
             case 1:
                 $usingDB = new WorkWithDB();
@@ -25,7 +25,7 @@ class ApplicationController
                 $usingFile->executeFileMode();
                 break;
             default:
-                echo "Wrong input.";
+                echo "Wrong input.";// change die
                 die();
         }
     }
@@ -47,9 +47,9 @@ class ApplicationController
         echo "[2] - Console\n";
         $action = trim(fgets(STDIN));
         $end = false;
-        while ($end == false) {
+        while ($end === false) {
             switch ($action) {
-                case 1:
+                case 1:  // conf iskelt
                     $inputFile = new InputFile();
                     $inputFile->outputConsole($formattedWord);
                     $end = true;
@@ -61,6 +61,7 @@ class ApplicationController
                     break;
                 default:
                     echo "Wrong input. Try again.";
+                    break;
             }
         }
     }

@@ -20,7 +20,7 @@ class QueryBuilder
     {
     }
 
-    public function select(array $attributes = []): QueryBuilder
+    public function select(array $attributes = []): QueryBuilder // collums rename
     {
         if ($attributes == []) {
             $this->action = "SELECT * ";
@@ -49,7 +49,7 @@ class QueryBuilder
         return $this;
     }
 
-    public function from(string $tables): QueryBuilder
+    public function from(string $tables): QueryBuilder // can be array
     {
         if (is_array($tables)) {
             $this->from = "FROM " . implode(", ", $tables);
@@ -79,8 +79,7 @@ class QueryBuilder
 
     public function set(array $valuesByKey): QueryBuilder
     {
-        $temp = [];
-        var_dump($valuesByKey);
+        $temp = []; // rename temp
         foreach ($valuesByKey as $key => $value) {
             $temp[] = "$key='$value'";
         }
