@@ -26,20 +26,20 @@ class WorkWithDB
         $action = trim(fgets(STDIN));
         switch ($action) {
             case 1:
-                $this->updateDB();
+                $this->resetDB();
                 break;
             case 2:
-                $this->addWord();
+                $this->modifyAndAddWord();
                 break;
             case 3:
-                $this->checkDoneWords();
+                $this->checkWordPatterns();
                 break;
             default:
                 echo "Wrong input.";
         }
     }
 
-    public function updateDB(): void
+    public function resetDB(): void
     {
         $file = new SplFileObject(FILENAME);
         while (!$file->eof()) {
@@ -62,7 +62,7 @@ class WorkWithDB
         $db->endTransaction();
     }
 
-    public function addWord(): void
+    public function modifyAndAddWord(): void
     {
         $patterns = [];
         $patternsID = [];
@@ -101,7 +101,7 @@ class WorkWithDB
         $this->dataBase->endTransaction();
     }
 
-    public function checkDoneWords(): void
+    public function checkWordPatterns(): void
     {
         //
     }

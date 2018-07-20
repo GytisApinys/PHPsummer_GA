@@ -38,9 +38,10 @@ class WordController implements ControllerInterface
     {
         if (count($this->urlActionString) == 1) {
             $this->wordModel->postWord($phpInput);
+            echo "Word has been added.\n";
 
         } elseif (count($this->urlActionString) != 1) {
-            echo "Wrong input";
+            echo "Wrong input.\n";
         }
     }
 
@@ -48,9 +49,11 @@ class WordController implements ControllerInterface
     {
         if (count($this->urlActionString) == 1) {
             $this->wordModel->deleteAllWords();
+            echo "All words have been deleted.\n";
 
         } elseif (count($this->urlActionString) == 2) {
             $this->wordModel->deleteWordByID($this->urlActionString[1]);
+            echo "Word has been deleted.\n";
         }
     }
 
@@ -58,8 +61,9 @@ class WordController implements ControllerInterface
     {
         if (count($this->urlActionString) == 2) {
             $this->wordModel->updateWordByID($this->urlActionString[1], $phpInput);
+            echo "Entry has been updated.\n";
         } elseif (count($this->urlActionString) != 2) {
-            echo "Wrong input";
+            echo "Wrong input\n";
         }
     }
 

@@ -38,9 +38,10 @@ class PatternController implements ControllerInterface
     {
         if (count($this->urlActionString) == 1) {
             $this->patternModel->postPattern($phpInput);
+            echo "Pattern has been added.\n";
 
         } elseif (count($this->urlActionString) == 2) {
-            echo "Wrong input";
+            echo "Wrong input.\n";
         }
     }
 
@@ -48,9 +49,11 @@ class PatternController implements ControllerInterface
     {
         if (count($this->urlActionString) == 1) {
             $this->patternModel->deleteAllPatterns();
+            echo "All patterns have been deleted.\n";
 
         } elseif (count($this->urlActionString) == 2) {
             $this->patternModel->deletePatternsByID($this->urlActionString[1]);
+            echo "Pattern has been deleted.\n";
         }
     }
 
@@ -58,8 +61,9 @@ class PatternController implements ControllerInterface
     {
         if (count($this->urlActionString) == 2) {
             $this->patternModel->updatePatternsByID($this->urlActionString[1], $phpInput);
+            echo "Entry has been updated.\n";
         } elseif (count($this->urlActionString) != 2) {
-            echo "Wrong input";
+            echo "Wrong input.\n";
         }
     }
 }
