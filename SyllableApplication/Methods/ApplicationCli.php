@@ -30,15 +30,17 @@ class ApplicationCli // CLIapplication
         }
     }
 
-    public static function readData($filename): array
-    {
-        $patterns = [];
-        $file = new SplFileObject($filename);
-        while (!$file->eof()) {
-            $patterns[] = $file->fgets();
-        }
-        return $patterns;
-    }
+//    public static function readData($filename): array
+//    {
+//        $patterns = [];
+//        $file = new SplFileObject($filename);
+//        while (!$file->eof()) {
+//            $patterns[] = trim($file->fgets());
+//            echo $file->fgetc() . "\n";
+//        }
+//        die;
+//        return $patterns;
+//    }
 
     public function resultDisplay($formattedWord): void
     {

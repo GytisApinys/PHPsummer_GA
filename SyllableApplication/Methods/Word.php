@@ -15,7 +15,11 @@ class Word
     {
         $matchingPatterns = $this->findMatch($pattern);
         $wordSpacing = $this->spaceSyllable($matchingPatterns);
+
         $modifiedWord = $this->combineStrings($wordSpacing);
+        var_dump($modifiedWord);
+
+        die;
         return $modifiedWord;
     }
 
@@ -25,7 +29,8 @@ class Word
             $cleanSyllable = preg_replace("/[\d\s.]+/", "", $syllable);
             if (preg_match('/^[.]/', $syllable) != null) {
                 $position = stripos($this->givenWord, $cleanSyllable);
-                if ($position !== false && substr($this->givenWord, 0, strlen($cleanSyllable)) === $cleanSyllable) {
+                if ($position !== false &&
+                    substr($this->givenWord, 0, strlen($cleanSyllable)) === $cleanSyllable) {
                     $foundPatterns[trim($syllable)][] = $position;
                 }
             } elseif (preg_match('/[.]$/', $syllable) != null) {
@@ -35,15 +40,16 @@ class Word
                     $foundPatterns[trim($syllable)][] = $position;
                 }
             } elseif (preg_match("/$cleanSyllable/i", $this->givenWord) != null) {
-                preg_match_all("/$cleanSyllable/i", $this->givenWord, $possitionArray, PREG_OFFSET_CAPTURE);
-                for ($i = 0; $i < count($possitionArray[0]); $i++) {
-                    $foundPatterns[trim($syllable)][] = $possitionArray[0][$i][1];
+                preg_match_all("/$cleanSyllable/i", $this->givenWord, $positionArray, PREG_OFFSET_CAPTURE);
+                for ($i = 0; $i < count($positionArray[0]); $i++) {
+                    $foundPatterns[trim($syllable)][] = $positionArray[0][$i][1];
                 }
             }
         }
         if (empty($foundPatterns)) {
             $foundPatterns = [];
         }
+
         return $foundPatterns;
     }
 
@@ -84,7 +90,7 @@ class Word
         return $wordSpaces;
     }
 
-    private function combineStrings($spacing): string
+    public function combineStrings($spacing): string
     {
 
         $formattedWord = '';

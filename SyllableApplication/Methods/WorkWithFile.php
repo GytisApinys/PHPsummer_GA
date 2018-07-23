@@ -15,7 +15,7 @@ class WorkWithFile
     {
         $file = new SplFileObject(FILENAME);
         while (!$file->eof()) {
-            $this->patterns[] = $file->fgets();
+            $this->patterns[] = trim($file->fgets());
         }
     }
 
