@@ -8,7 +8,6 @@
 
 namespace SyllableApplication\tests;
 
-use SyllableApplication;
 use SyllableApplication\Methods\Word;
 
 require __DIR__ . "/../Methods/Word.php";

@@ -17,9 +17,7 @@ class Word
         $wordSpacing = $this->spaceSyllable($matchingPatterns);
 
         $modifiedWord = $this->combineStrings($wordSpacing);
-        var_dump($modifiedWord);
 
-        die;
         return $modifiedWord;
     }
 

@@ -10,20 +10,16 @@ class WorkWithDB
     private $patterns;
     private $dataBase;
 
-    public function __construct()
-    {
-        $this->dataBase = new Database();
-    }
-
     public function executeDBMode(): void
     {
+        $this->dbInit();
         ConsoleMsgOutput::workBbMsg();
         $this->optionInput();
     }
-//    public function dbInit()
-//    {
-//        $this->dataBase = new Database();
-//    }
+    public function dbInit()
+    {
+        $this->dataBase = new Database();
+    }
 
     public function optionInput(): void
     {
@@ -49,21 +45,20 @@ class WorkWithDB
         while (!$file->eof()) {
             $this->patterns[] = $file->fgets();
         }
-        $db = new Database();
-        $db->beginTransaction();
+        $this->dataBase->beginTransaction();
 
-        $db->delete("patterns");
-        $db->delete("word_patterns");
-        $db->delete("words");
+        $this->dataBase->delete("patterns");
+        $this->dataBase->delete("word_patterns");
+        $this->dataBase->delete("words");
 
         foreach ($this->patterns as $pattern) {
             $pattern = trim($pattern);
-            $db->insert("patterns", [
+            $this->dataBase->insert("patterns", [
                 "pattern" => $pattern
             ]);
         }
 
-        $db->endTransaction();
+        $this->dataBase->endTransaction();
     }
 
     public function modifyAndAddWord(): void
