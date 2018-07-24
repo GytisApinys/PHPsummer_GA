@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<!-- Popper JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+
+<html lang="en">
+<head>
+
+</head>
+<body>
+
+
+</body>
+</html>
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(function () {
+            $.ajax({
+                type: 'GET',
+                url: "http://syllableapp.local/word/110",
+                success: function (data) {
+                    dataArray = JSON.parse(data);
+                    console.log(data);
+                    console.log(dataArray);
+
+                }
+            });
+            return false;
+        });
+    });
+
+
+    var words = [{"word": "DARVUEB+", "word_finished": "T-e-22s-t-a-s"}];
+    $.ajax({
+        type: 'POST',
+        url: "http://syllableapp.local/word",
+        data: JSON.stringify(words),
+    success: function(data) {
+        console.log(words);
+
+    }});
+
+</script>
