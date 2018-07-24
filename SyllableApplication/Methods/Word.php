@@ -15,7 +15,6 @@ class Word
     {
         $matchingPatterns = $this->findMatch($pattern);
         $wordSpacing = $this->spaceSyllable($matchingPatterns);
-
         $modifiedWord = $this->combineStrings($wordSpacing);
 
         return $modifiedWord;

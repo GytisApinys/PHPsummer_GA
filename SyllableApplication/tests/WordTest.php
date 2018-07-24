@@ -40,7 +40,6 @@ class WordTest extends \PHPUnit\Framework\TestCase
         $output = $this->wordClass->findMatch($mockData);
         self::assertEquals($expected, $output);
     }
-
     public function testCombineStrings()
     {
         $mockData = ["2", 0, "1", "4", 0, "2", "2", "3", "2", "4", 0, 0];
