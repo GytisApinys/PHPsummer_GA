@@ -12,6 +12,7 @@ namespace Api;
 class APIRouter //
 {
     private $entryList;
+    private $forbiddenMethods = ['OPTIONS'];
 
     public function __construct(string $apiURL)
     {
@@ -40,6 +41,9 @@ class APIRouter //
 
     public function execute(string $apiMethod)
     {
+        if ($this->isForbiddenMethod($apiMethod)) {
+            return;
+        }
         $phpInput = json_decode(file_get_contents("php://input"), true);
         $controllerName = $this->directions();
         $modelName = 'Model\\' . $controllerName . "Model";
@@ -56,5 +60,10 @@ class APIRouter //
         } catch (\Exception  $e) {
             echo "Error" . $e->getMessage();
         }
+    }
+
+    private function isForbiddenMethod($apiMethod)
+    {
+        return in_array($apiMethod, $this->forbiddenMethods);
     }
 }

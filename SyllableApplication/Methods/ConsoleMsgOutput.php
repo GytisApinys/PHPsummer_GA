@@ -48,6 +48,12 @@ class ConsoleMsgOutput
         echo "|________________________|\n";
         echo "Enter choice:............\n";
     }
+    public static function outputResultMsg()
+    {
+        echo "\nHow would you want to get result?\n";
+        echo "[1] - File\n";
+        echo "[2] - Console\n";
+    }
 
 
 }

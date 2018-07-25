@@ -44,9 +44,7 @@ class ApplicationCli // CLIapplication
 
     public function resultDisplay($formattedWord): void
     {
-        echo "\nHow would you want to get result?\n";
-        echo "[1] - File\n";
-        echo "[2] - Console\n";
+        ConsoleMsgOutput::outputResultMsg();
         $action = trim(fgets(STDIN));
         $end = false;
         while ($end === false) {
