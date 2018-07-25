@@ -8,6 +8,9 @@ use Database\Database;
 class WorkWithDB
 {
     private $patterns;
+    /**
+     * @var Database
+     */
     private $dataBase;
 
     public function executeDBMode(): void
@@ -16,6 +19,7 @@ class WorkWithDB
         ConsoleMsgOutput::workBbMsg();
         $this->optionInput();
     }
+
     public function dbInit()
     {
         $this->dataBase = new Database();

@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Gytis.Apinys
- * Date: 7/17/2018
- * Time: 3:22 PM
- */
 
 namespace Database;
 
@@ -91,5 +85,11 @@ class QueryBuilder
     public function __toString(): string
     {
         return $this->action . " " . $this->from . " " . $this->values . " " . $this->where;
+
     }
+
+
 }
+
+
+

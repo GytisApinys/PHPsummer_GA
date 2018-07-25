@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Gytis.Apinys
- * Date: 7/17/2018
- * Time: 3:51 PM
- */
 
 namespace Api;
 

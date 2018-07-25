@@ -73,10 +73,7 @@ class WorkWithFile
 
     public function resultDisplay($formattedWord): void
     {
-        echo "\nHow would you want to get result?\n";
-        echo "[1] - File\n";
-        echo "[2] - Console\n";
-
+        ConsoleMsgOutput::outputResultMsg();
         $end = false;
         while ($end == false) {
             $action = trim(fgets(STDIN));
