@@ -36,7 +36,7 @@ class WorkWithDB
                 $this->modifyAndAddWord();
                 break;
             case 3:
-                $this->checkWordPatterns();
+                $this->checkSyllableUsed();
                 break;
             default:
                 echo "Wrong input.";
@@ -83,7 +83,6 @@ class WorkWithDB
                 $objWord = new Word($word);
                 $wordSyllable = $objWord->modifyWord($patterns);
                 $usedPatterns = $objWord->findMatch($patterns);
-                die(var_dump($usedPatterns));
                 $usedPatterns = array_keys($usedPatterns);
                 $this->dataBase->insert("words", [
                     "word" => $word,
@@ -103,7 +102,7 @@ class WorkWithDB
         $this->dataBase->endTransaction();
     }
 
-    public function checkWordPatterns(): void
+    public function checkSyllableUsed(): void
     {
         //
     }
