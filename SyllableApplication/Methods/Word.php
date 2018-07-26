@@ -2,9 +2,12 @@
 
 namespace SyllableApplication\Methods;
 
+use SplFileObject;
+
 class Word
 {
     private $givenWord;
+    private $patterns;
 
     public function __construct($word)
     {
@@ -18,6 +21,15 @@ class Word
         $modifiedWord = $this->combineStrings($wordSpacing);
 
         return $modifiedWord;
+    }
+
+    public function getPatterns()
+    {
+        $file = new SplFileObject(FILENAME);
+        while (!$file->eof()) {
+            $this->patterns[] = trim($file->fgets());
+        }
+        return $this->patterns;
     }
 
     public function findMatch(array $patterns): array

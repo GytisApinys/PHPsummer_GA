@@ -100,6 +100,7 @@
             // dataType: "json",
             success: function (data) {
                 console.log(data);
+                displayElements();
 
             },
             error: function (jqXHR, textStatus, errorThrown) {
@@ -107,6 +108,22 @@
             },
         })
 
+    }
+
+    function displayElements() {
+        $.ajax({
+            type: "GET",
+            contentType: "application/json",
+            url: "http://syllableapp.local/word/",
+            // dataType: "json",
+            success: function (data) {
+                dataArray = JSON.parse(data);
+                createTableFromJSON(dataArray);
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                console.log(jqXHR, textStatus, errorThrown);
+            },
+        })
     }
 
     function updateElement(id) {
@@ -153,12 +170,12 @@
 </script>
 
 <body>
-<div >
+<div class="container">
     <h3>Information tables</h3>
 
     <button id="wordShow" name="submit" onclick="patternList()" type="button">Pattern list</button>
     <button id="submit" name="submit" onclick="wordList()" type="button">Word List</button>
-    <div  id="showData"></div>
+    <div id="showData" class="container"></div>
 
 
 </div>

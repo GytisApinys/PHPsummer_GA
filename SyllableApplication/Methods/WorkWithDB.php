@@ -47,7 +47,7 @@ class WorkWithDB
     {
         $file = new SplFileObject(FILENAME);
         while (!$file->eof()) {
-            $this->patterns[] = $file->fgets();
+            $this->patterns[] = trim($file->fgets());
         }
         $this->dataBase->beginTransaction();
 
@@ -83,6 +83,7 @@ class WorkWithDB
                 $objWord = new Word($word);
                 $wordSyllable = $objWord->modifyWord($patterns);
                 $usedPatterns = $objWord->findMatch($patterns);
+                die(var_dump($usedPatterns));
                 $usedPatterns = array_keys($usedPatterns);
                 $this->dataBase->insert("words", [
                     "word" => $word,

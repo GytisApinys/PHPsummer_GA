@@ -11,6 +11,7 @@ namespace Model;
 
 use Database\Database;
 use Database\QueryBuilder;
+use SyllableApplication\Methods\Word;
 
 class WordModel
 {
@@ -43,6 +44,13 @@ class WordModel
 
     public function postWord(array $phpInput)
     {
+
+        for ($i = 0; $i < count($phpInput); $i++) {
+            $word = $phpInput[$i]['word'];
+            $wordObj = new Word($word);
+            $phpInput[$i]['word_finished'] = $wordObj->modifyWord($wordObj->getPatterns());
+        }
+
         $query = (new QueryBuilder())
             ->insert($this->tableName)
             ->value($phpInput);
