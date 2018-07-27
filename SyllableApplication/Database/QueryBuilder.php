@@ -82,14 +82,18 @@ class QueryBuilder
         return $this;
     }
 
+    public function cleanQuery()
+    {
+        $this->action = "";
+        $this->values = "";
+        $this->from = "";
+        $this->where = "";
+    }
+
     public function __toString(): string
     {
         return $this->action . " " . $this->from . " " . $this->values . " " . $this->where;
-
     }
 
-
 }
-
-
 

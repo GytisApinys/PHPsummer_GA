@@ -2,6 +2,7 @@
 
 namespace SyllableApplication\Methods;
 
+use Database\QueryBuilder;
 use SplFileObject;
 use Database\Database;
 
@@ -80,6 +81,7 @@ class WorkWithDB
 
         foreach ($wordList as $word) {
             if (preg_match("/[\w]/", $word) != null) {
+                // use check if already in DB
                 $objWord = new Word($word);
                 $wordSyllable = $objWord->modifyWord($patterns);
                 $usedPatterns = $objWord->findMatch($patterns);
@@ -94,7 +96,8 @@ class WorkWithDB
                     $key = $patternsID[$key];
                     $this->dataBase->insert("word_patterns", [
                         "word_id" => $insertedWordID,
-                        "syllable_id" => $key
+                        "syllable_id" => $key,
+                        "syllable" => $entry
                     ]);
                 }
             }
@@ -104,6 +107,42 @@ class WorkWithDB
 
     public function checkSyllableUsed(): void
     {
-        //
+        echo "Enter word you want to see syllables from before?\n";
+        $word = trim(fgets(STDIN));
+        $query = (new QueryBuilder())
+            ->select()
+            ->where(["word = '$word'"])
+            ->from("words");
+
+        $output = $this->dataBase->executeWithResult($query);
+        if (empty($output)) {
+            echo "Word $word was not found in DB\n";
+        } else {
+            $wordID = $output[0]['id'];
+            $query->cleanQuery();
+            $query->select()->from('word_patterns')->where(["word_id = $wordID"]);
+
+            $patternOutputs = $this->dataBase->executeWithResult($query);
+            echo "Patterns used for word $word are:\n";
+            for ($i = 0; $i < count($patternOutputs); $i++) {
+                echo $patternOutputs[$i]['syllable'] . "\n";
+            }
+        }
+    }
+
+    public function checkIfWordAlreadyInDB(string $word): ?string
+    {
+        $query = (new QueryBuilder())
+            ->select()
+            ->where(["word = '$word'"])
+            ->from("words");
+
+        $output = $this->dataBase->executeWithResult($query);
+        if (!empty($output)) {
+            return $output[0]['word_finished'];
+        } else {
+            ;
+            return "FALSE";
+        }
     }
 }
